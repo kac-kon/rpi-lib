@@ -11,8 +11,8 @@ class Displays:
         self._weather = Weather()
         self._lcd0 = drivers.lcd_driver.lcd(constants.LCD.id(0))
         self._lcd1 = drivers.lcd_driver.lcd(constants.LCD.id(1))
-        self.set_backlight(0, constants.INITIALS.LCD2_BACKLIGHT)
-        self.set_backlight(1, constants.INITIALS.LCD4_BACKLIGHT)
+        self._lcd0.backlight(constants.INITIALS.LCD2_BACKLIGHT)
+        self._lcd1.backlight(constants.INITIALS.LCD4_BACKLIGHT)
         
     
     def set_backlight(self, lcd_id, state):
@@ -23,6 +23,8 @@ class Displays:
     
     def _display_weather(self):
         conditions = self._weather.get_current_conditions()
+        self._lcd1.lcd_clear_line(20,2)
+        self._lcd1.lcd_clear_line(20,3)
         self._lcd1.lcd_load_custom_chars([custom_chars.celc, custom_chars.arrows[int(conditions['wind_direction'])]])
         self._lcd1.lcd_display_string(conditions['temp_now'], 2)
         self._lcd1.lcd_write_char(0)

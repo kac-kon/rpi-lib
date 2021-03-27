@@ -105,13 +105,15 @@ Rs = 0b00000001 # Register select bit
 
 class lcd:
    #initializes objects and lcd
-   def __init__(self, ADDRESS, I2CBUS=1):
+   def __init__(self, ADDRESS, I2CBUS=1, backlight=LCD_BACKLIGHT):
+      self.lcd_backlight = backlight
       self.lcd_device = i2c_device(ADDRESS, I2CBUS)
 
       self.lcd_write(0x03)
       self.lcd_write(0x03)
       self.lcd_write(0x03)
       self.lcd_write(0x02)
+      
 
       self.lcd_write(LCD_FUNCTIONSET | LCD_2LINE | LCD_5x8DOTS | LCD_4BITMODE)
       self.lcd_write(LCD_DISPLAYCONTROL | LCD_DISPLAYON)
@@ -122,13 +124,13 @@ class lcd:
 
    # clocks EN to latch command
    def lcd_strobe(self, data):
-      self.lcd_device.write_cmd(data | En | LCD_BACKLIGHT)
+      self.lcd_device.write_cmd(data | En | self.lcd_backlight)
       sleep(.0005)
-      self.lcd_device.write_cmd(((data & ~En) | LCD_BACKLIGHT))
+      self.lcd_device.write_cmd(((data & ~En) | self.lcd_backlight))
       sleep(.0001)
 
    def lcd_write_four_bits(self, data):
-      self.lcd_device.write_cmd(data | LCD_BACKLIGHT)
+      self.lcd_device.write_cmd(data | self.lcd_backlight)
       self.lcd_strobe(data)
 
    # write a command to lcd
@@ -162,13 +164,19 @@ class lcd:
    def lcd_clear(self):
       self.lcd_write(LCD_CLEARDISPLAY)
       self.lcd_write(LCD_RETURNHOME)
+  
+   def lcd_clear_line(self, length=0, line=1, pos=0):
+      string = length*' ' 
+      self.lcd_display_string(string, line, pos)
 
    # define backlight on/off (lcd.backlight(1); off= lcd.backlight(0)
    def backlight(self, state): # for state, 1 = on, 0 = off
       if state == 1:
          self.lcd_device.write_cmd(LCD_BACKLIGHT)
+         self.lcd_backlight = LCD_BACKLIGHT
       elif state == 0:
          self.lcd_device.write_cmd(LCD_NOBACKLIGHT)
+         self.lcd_backlight = LCD_NOBACKLIGHT
 
    # add custom characters (0 - 7)
    def lcd_load_custom_chars(self, fontdata):
