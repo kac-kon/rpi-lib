@@ -105,9 +105,10 @@ Rs = 0b00000001 # Register select bit
 
 class lcd:
    #initializes objects and lcd
-   def __init__(self, ADDRESS, I2CBUS=1, backlight=LCD_BACKLIGHT):
-      self.lcd_backlight = backlight
+   def __init__(self, ADDRESS, I2CBUS=1, backlight=True):
+      self.lcd_backlight = LCD_BACKLIGHT
       self.lcd_device = i2c_device(ADDRESS, I2CBUS)
+      self.backlight(backlight)
 
       self.lcd_write(0x03)
       self.lcd_write(0x03)
@@ -165,9 +166,11 @@ class lcd:
       self.lcd_write(LCD_CLEARDISPLAY)
       self.lcd_write(LCD_RETURNHOME)
   
-   def lcd_clear_line(self, length=0, line=1, pos=0):
+   # clear lcd at given position 
+   def lcd_clear_line(self, length=16, line=1, pos=0):
       string = length*' ' 
       self.lcd_display_string(string, line, pos)
+      self.lcd_write(LCD_RETURNHOME)
 
    # define backlight on/off (lcd.backlight(1); off= lcd.backlight(0)
    def backlight(self, state): # for state, 1 = on, 0 = off

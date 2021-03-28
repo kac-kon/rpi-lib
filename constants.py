@@ -18,7 +18,7 @@ class LED_STRIP:
 
 class INITIALS:
     LCD2_BACKLIGHT = True                       # lcd 2x16 backlight enabled
-    LCD4_BACKLIGHT = False                      # lcd 4x20 backlight enabled
+    LCD4_BACKLIGHT = True                      # lcd 4x20 backlight enabled
     LED12_ON = True                             # 12V strip enabled
     LED5_ON = True                              # 5V WS281B strip enabled
     LED_BRIGHTNESS = 255                        # LED strips brightness
