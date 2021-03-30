@@ -1,11 +1,6 @@
 import constants
-from variables import Vars
+from variables import LedVar
 
-import sys
-import pyaudio
-from struct import unpack
-import numpy as np
-import os
 import time
 import pigpio
 import threading
@@ -15,7 +10,7 @@ from rpi_ws281x import *
 
 class LED:
     def __init__(self):
-        self._var = Vars()
+        self._var = LedVar()
         self._pi = pigpio.pi()
         self._strip = Adafruit_NeoPixel(constants.LEDSTRIP.LED_COUNT,
                                         constants.LEDSTRIP.LED_PIN,
@@ -53,7 +48,7 @@ class LED:
 
     def _v5_set_color(self):
         for i in range(0, self._var.led_strip_display, self._var.led_strip_direction):
-            self._strip.setPixelColorRGB(i,int(self._var.led_red * self._var.led_brightness / constants.INITIALS.LED_BRIGHTNESS),
+            self._strip.setPixelColorRGB(i, int(self._var.led_red * self._var.led_brightness / constants.INITIALS.LED_BRIGHTNESS),
                                          int(self._var.led_green * self._var.led_brightness / constants.INITIALS.LED_BRIGHTNESS),
                                          int(self._var.led_blue * self._var.led_brightness / constants.INITIALS.LED_BRIGHTNESS))
         self._strip.show()

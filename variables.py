@@ -1,13 +1,89 @@
 import constants
 
 
-class Vars:
+class ButtonsVar:
     def __init__(self):
         self._button_one = False
         self._button_two = False
         self._button_three = False
+
+        self._button_callbacks = []
+
+    @property
+    def button_one(self):
+        return self._button_one
+
+    @button_one.setter
+    def button_one(self, new_state):
+        button_number = 1
+        self._button_one = new_state
+        self._notify_button_observer(button_number, new_state)
+
+    @property
+    def button_two(self):
+        return self._button_one
+
+    @button_two.setter
+    def button_two(self, new_state):
+        button_number = 2
+        self._button_two = new_state
+        self._notify_button_observer(button_number, new_state)
+
+    @property
+    def button_three(self):
+        return self._button_one
+
+    @button_three.setter
+    def button_three(self, new_state):
+        button_number = 3
+        self._button_three = new_state
+        self._notify_button_observer(button_number, new_state)
+
+    def _notify_button_observer(self, button_number, new_value):
+        for callback in self._button_callbacks:
+            callback(button_number, new_value)
+
+    def register_button_callback(self, callback):
+        self._button_callbacks.append(callback)
+
+
+class LcdVar:
+    def __init__(self):
         self._lcd2_backlight = constants.INITIALS.LCD2_BACKLIGHT
         self._lcd4_backlight = constants.INITIALS.LCD4_BACKLIGHT
+
+        self._lcd_callbacks = []
+
+    @property
+    def lcd2_backlight(self):
+        return self._lcd2_backlight
+
+    @lcd2_backlight.setter
+    def lcd2_backlight(self, new_state):
+        lcd_id = constants.LCD.ID_0
+        self._lcd2_backlight = new_state
+        self._notify_lcd_observer(lcd_id, new_state)
+
+    @property
+    def lcd4_backlight(self):
+        return self._lcd4_backlight
+
+    @lcd4_backlight.setter
+    def lcd4_backlight(self, new_state):
+        lcd_id = constants.LCD.ID_1
+        self._lcd4_backlight = new_state
+        self._notify_lcd_observer(lcd_id, new_state)
+
+    def _notify_lcd_observer(self, lcd_id, new_state):
+        for callback in self._lcd_callbacks:
+            callback(lcd_id, new_state)
+
+    def register_lcd_callback(self, callback):
+        self._lcd_callbacks.append(callback)
+
+
+class LedVar:
+    def __init__(self):
         self._led12_on = constants.INITIALS.LED12_ON
         self._led5_on = constants.INITIALS.LED5_ON
         self._led_brightness = constants.INITIALS.LED_BRIGHTNESS
@@ -18,8 +94,6 @@ class Vars:
         self._led_strip_display = constants.INITIALS.LED_STRIP_DISPLAY
         self._fade_away_speed = constants.INITIALS.FADE_AWAY_SPEED
 
-        self._button_callbacks = []
-        self._lcd_backlight_callbacks = []
         self._led_enable_callbacks = []
         self._led_color_callbacks = []
         self._led_strip_callbacks = []
@@ -27,56 +101,6 @@ class Vars:
     @property
     def fade_away_speed(self):
         return self._fade_away_speed
-
-    @property
-    def button_one(self):
-        return self._button_one
-
-    @button_one.setter
-    def button_one(self, new_value):
-        button_number = 1
-        self._button_one = new_value
-        self._notify_button_observer(button_number, new_value)
-
-    @property
-    def button_two(self):
-        return self._button_two
-
-    @button_two.setter
-    def button_two(self, new_value):
-        button_number = 2
-        self._button_one = new_value
-        self._notify_button_observer(button_number, new_value)
-
-    @property
-    def button_three(self):
-        return self._button_three
-
-    @button_three.setter
-    def button_three(self, new_value):
-        button_number = 3
-        self._button_one = new_value
-        self._notify_button_observer(button_number, new_value)
-
-    @property
-    def lcd2_backlight(self):
-        return self._lcd2_backlight
-
-    @lcd2_backlight.setter
-    def lcd2_backlight(self, new_value):
-        lcd_id = 0
-        self._lcd2_backlight = new_value
-        self._notify_lcd_backlight_observer(lcd_id, new_value)
-
-    @property
-    def lcd4_backlight(self):
-        return self._lcd4_backlight
-
-    @lcd4_backlight.setter
-    def lcd4_backlight(self, new_value):
-        lcd_id = 1
-        self._lcd2_backlight = new_value
-        self._notify_lcd_backlight_observer(lcd_id, new_value)
 
     @property
     def led12_on(self):
@@ -157,20 +181,6 @@ class Vars:
         prop = constants.INITIALS.LED_STRIP_DISPLAY
         self._led_strip_display = new_value
         self._notify_led_strip_properties_observer(prop, new_value)
-
-    def _notify_button_observer(self, button_number, new_value):
-        for callback in self._button_callbacks:
-            callback(button_number, new_value)
-
-    def register_button_callback(self, callback):
-        self._button_callbacks.append(callback)
-
-    def _notify_lcd_backlight_observer(self, lcd_id, new_value):
-        for callback in self._lcd_backlight_callbacks:
-            callback(lcd_id, new_value)
-
-    def register_lcd_backlight_callback(self, callback):
-        self._lcd_backlight_callbacks.append(callback)
 
     def _notify_led_enable_observer(self, strip, new_value):
         for callback in self._led_enable_callbacks:

@@ -1,15 +1,15 @@
 from drivers.MCP3008 import MCP3008
-from variables import Vars
+from variables import ButtonsVar
 import threading
 import time
 
 THRESHOLD = 900
 
 
-class ButtonsHandler():
+class ButtonsHandler:
     def __init__(self):
         self.adc = MCP3008()
-        self.var = Vars()
+        self.var = ButtonsVar()
         self.pressed = [0, 0, 0]
         self._exit_event = threading.Event()
         self._thread_loop = threading.Thread()
@@ -22,7 +22,7 @@ class ButtonsHandler():
         while not (self._exit_event.is_set()):
             data = self.adc.read_3()
             for i in range(3):
-                if self.pressed[i] == False and data[i] > THRESHOLD:
+                if self.pressed[i] is False and data[i] > THRESHOLD:
                     if i == 0:
                         self.var.button_one = True
                     elif i == 1:
@@ -31,7 +31,7 @@ class ButtonsHandler():
                         self.var.button_three = True
                     self.pressed[i] = True
             for i in range(3):
-                if data[i] < THRESHOLD and self.pressed[i] == True:
+                if data[i] < THRESHOLD and self.pressed[i] is True:
                     if i == 0:
                         self.var.button_one = False
                     elif i == 1:

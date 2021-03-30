@@ -3,24 +3,27 @@ import constants
 import custom_chars
 import drivers.lcd_driver
 import threading
-from variables import Vars
+from variables import LcdVar
 from weather import Weather
 
 
 class Displays:
     def __init__(self):
+        self._var = LcdVar()
         self._weather = Weather()
-        self._lcd0 = drivers.lcd_driver.lcd(constants.LCD.ID_0, backlight=constants.INITIALS.LCD2_BACKLIGHT)
-        self._lcd1 = drivers.lcd_driver.lcd(constants.LCD.ID_1, backlight=constants.INITIALS.LCD4_BACKLIGHT)
+        self._lcd0 = drivers.lcd_driver.lcd(constants.LCD.ID_0, backlight=self._var.lcd2_backlight)
+        self._lcd1 = drivers.lcd_driver.lcd(constants.LCD.ID_1, backlight=self._var.lcd4_backlight)
 
         self._exit_datetime_event = threading.Event()
         self._thread_print_datetime = threading.Thread()
         self.print_weather()
 
+        self._var.register_lcd_callback(self.set_backlight)
+
     def set_backlight(self, lcd_id, state):
-        if lcd_id == 0:
+        if lcd_id == constants.LCD.ID_0:
             self._lcd0.backlight(state)
-        elif lcd_id == 1:
+        elif lcd_id == constants.LCD.ID_1:
             self._lcd1.backlight(state)
 
     def print_weather(self):
@@ -60,16 +63,3 @@ class Displays:
         self._exit_datetime_event.set()
         self._thread_print_datetime.join()
         print('thread finished')
-
-
-if __name__ == '__main__':
-    d = Displays()
-    d.start_print_datetime_short()
-    print('s')
-    time.sleep(2)
-    d.set_backlight(1, 0)
-    time.sleep(2)
-    d.set_backlight(1, 1)
-
-    d.exit_print_datetime_short()
-    # d.print_weather()

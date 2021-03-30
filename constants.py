@@ -35,9 +35,19 @@ class INITIALS:
     LED_CHANNEL_BLUE = 'b'                      # label for blue channel
     LED_STRIP_PROP_DIR = 'dir'                  # label for WS281B strip direction
     LED_STRIP_PROP_DIS = 'dis'                  # label for WS281B strip display count
-    FADE_AWAY_SPEED = 10
+    FADE_AWAY_SPEED = 10                        # LED's fading speed
 
 
 class LCD:
     ID_0 = 0x26
     ID_1 = 0x27
+
+
+class AUDIO:
+    DEFAULT_DEVICE = 0
+    NO_CHANNELS = 1
+    SAMPLE_RATE = 44100
+    CHUNK = 768
+    SENSITIVENESS = [1.5, 1.35, 1.25, 1.3, 1.32, 1.23, 1.22, 1.3, 1.35, 1.35, 1.35]
+    FREQUENCIES = [0, 32, 64, 125, 250, 500, 1000, 2000, 4000, 8000, 16000, 20000]
+    WEIGHTING = [2, 2, 4, 4, 8, 12, 16, 16, 32, 32]
