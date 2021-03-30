@@ -29,5 +29,6 @@ class MCP3008:
             adc = self.spi.xfer2([1, (8 + i) << 4, 0])
             data.append(((adc[1] & 3) << 8) + adc[2])
         return data
+
     def close(self):
         self.spi.close()
