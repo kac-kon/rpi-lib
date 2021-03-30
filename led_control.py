@@ -35,13 +35,16 @@ class LED:
         print(f"channel {channel} changed vale to {val}")
 
     def _set_color(self):
-        #self._v12_set_color()
-        #self._v5_set_color()
-        print(f"colors\nR: {self._var.led_red}\nG: {self._var.led_green}\nB: {self._var.led_blue}\nset")
-        print(f"R_b = {int(self._var.led_red * (self._var.led_brightness / constants.INITIALS.LED_BRIGHTNESS))}\n"
-              f"G_b = {int(self._var.led_red * (self._var.led_brightness / constants.INITIALS.LED_BRIGHTNESS))}\n"
-              f"B_b = {int(self._var.led_red * (self._var.led_brightness / constants.INITIALS.LED_BRIGHTNESS))}")
-
+        self._v12_set_color()
+        self._v5_set_color()
+        # print(f"colors\n"
+        #       f"R: {self._var.led_red}\n"
+        #       f"G: {self._var.led_green}\n"
+        #       f"B: {self._var.led_blue}\n"
+        #       f"set")
+        # print(f"R_b = {int(self._var.led_red * (self._var.led_brightness / constants.INITIALS.LED_BRIGHTNESS))}\n"
+        #       f"G_b = {int(self._var.led_green * (self._var.led_brightness / constants.INITIALS.LED_BRIGHTNESS))}\n"
+        #       f"B_b = {int(self._var.led_blue * (self._var.led_brightness / constants.INITIALS.LED_BRIGHTNESS))}")
 
     def _v12_set_color(self):
         self._pi.set_PWM_dutycycle(constants.GPIO.GPIO_RED, int(self._var.led_red * self._var.led_brightness / constants.INITIALS.LED_BRIGHTNESS) )
@@ -51,8 +54,8 @@ class LED:
     def _v5_set_color(self):
         for i in range(0, self._var.led_strip_display, self._var.led_strip_direction):
             self._strip.setPixelColorRGB(i,int(self._var.led_red * self._var.led_brightness / constants.INITIALS.LED_BRIGHTNESS),
-                                         int(self._var.led_red * self._var.led_brightness / constants.INITIALS.LED_BRIGHTNESS),
-                                         int(self._var.led_red * self._var.led_brightness / constants.INITIALS.LED_BRIGHTNESS))
+                                         int(self._var.led_green * self._var.led_brightness / constants.INITIALS.LED_BRIGHTNESS),
+                                         int(self._var.led_blue * self._var.led_brightness / constants.INITIALS.LED_BRIGHTNESS))
         self._strip.show()
 
     def _fade_away(self):
