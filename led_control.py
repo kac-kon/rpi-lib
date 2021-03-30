@@ -38,9 +38,9 @@ class LED:
         #self._v12_set_color()
         #self._v5_set_color()
         print(f"colors\nR: {self._var.led_red}\nG: {self._var.led_green}\nB: {self._var.led_blue}\nset")
-        print(f"R_b = {int(self._var.led_red * self._var.led_brightness / constants.INITIALS.LED_BRIGHTNESS)}\n"
-              f"G_b = {int(self._var.led_red * self._var.led_brightness / constants.INITIALS.LED_BRIGHTNESS)}\n"
-              f"B_b = {int(self._var.led_red * self._var.led_brightness / constants.INITIALS.LED_BRIGHTNESS)}")
+        print(f"R_b = {int(self._var.led_red * (self._var.led_brightness / constants.INITIALS.LED_BRIGHTNESS))}\n"
+              f"G_b = {int(self._var.led_red * (self._var.led_brightness / constants.INITIALS.LED_BRIGHTNESS))}\n"
+              f"B_b = {int(self._var.led_red * (self._var.led_brightness / constants.INITIALS.LED_BRIGHTNESS))}")
 
 
     def _v12_set_color(self):
