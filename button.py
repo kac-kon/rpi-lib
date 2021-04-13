@@ -15,6 +15,7 @@ class ButtonsHandler:
         self._thread_loop = threading.Thread()
 
     def start_loop(self):
+        self._exit_event.clear()
         self._thread_loop = threading.Thread(target=self._start_loop)
         self._thread_loop.start()
 

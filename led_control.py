@@ -64,3 +64,13 @@ class LED:
             else:
                 self._var.led_brightness -= self._var.fade_away_speed
             time.sleep(.02)
+
+    def set_color_rgb(self, color_r, color_g, color_b):
+        self._var.led_red = color_r
+        self._var.led_green = color_g
+        self._var.led_blue = color_b
+
+    def set_color(self, color_array):
+        self._var.led_red = color_array[0]
+        self._var.led_green = color_array[1]
+        self._var.led_blue = color_array[2]

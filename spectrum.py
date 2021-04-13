@@ -1,5 +1,5 @@
 from constants import AUDIO
-
+import threading
 import pyaudio
 from struct import unpack
 import numpy as np
@@ -12,6 +12,8 @@ class Spec:
         self.weighting = AUDIO.WEIGHTING
         self.frequencies = AUDIO.FREQUENCIES
         self.sensitivity = np.array(AUDIO.SENSITIVENESS)
+        self._spec_thread = threading.Thread()
+        self._exit_event = threading.Event()
 
         self.p = pyaudio.PyAudio()
         self.stream = self.p.open(format=pyaudio.paInt16,
@@ -49,3 +51,17 @@ class Spec:
     def catch_bit(self):
         data = self.stream.read(AUDIO.CHUNK, exception_on_overflow=False)
         self._calculate_levels(data)
+
+    def start_monitoring(self):
+        self._exit_event.clear()
+        self._spec_thread = threading.Thread(target=self._start_monitoring)
+        self._spec_thread.start()
+
+    def _start_monitoring(self):
+        while not self._exit_event.is_set():
+            self.catch_bit()
+            self.spec_matrix = self.matrix
+
+    def stop_monitoring(self):
+        self._exit_event.set()
+        self._spec_thread.join()

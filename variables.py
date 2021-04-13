@@ -197,6 +197,7 @@ class LedVar:
         self._led_color_callbacks.append(callback)
 
     def _notify_led_strip_properties_observer(self, prop, new_value):
+        # [callback(prop, new_value) for callback in self._led_strip_callbacks]
         for callback in self._led_strip_callbacks:
             callback(prop, new_value)
 

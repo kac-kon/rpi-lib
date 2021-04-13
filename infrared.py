@@ -25,7 +25,7 @@ class IR:
         self._pi.stop()
 
     def start_hasher(self):
-        self.stop_hasher()
+        # self.stop_hasher()
         self._pi = pigpio.pi()
         self._ir_hasher = Hasher(self._pi, GPIO.GPIO_IR_RX, self._cb, timeout=10)
 
