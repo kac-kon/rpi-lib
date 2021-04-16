@@ -13,7 +13,7 @@ api = Api(app)
 
 class RpiServer(Resource):
     def get(self):
-        response = jsonify({"data": "CHUJ"})
+        response = jsonify([{"data": "CHUJ"}])
         return response
 
 
