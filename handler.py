@@ -70,7 +70,12 @@ if __name__ == "__main__":
             return response
 
 
-    class RGB(Resource):
+    class RGBSet(Resource):
+        def post(self, red, green, blue):
+            hand.set_colors([red, green, blue])
+
+
+    class RGBGet(Resource):
         def get(self):
             colors = hand.get_colors()
             response = jsonify([{"Red": colors[0],
@@ -78,12 +83,10 @@ if __name__ == "__main__":
                                 "Blue": colors[2]}])
             return response
 
-        def post(self, red, green, blue):
-            hand.set_colors([red, green, blue])
-
 
     api.add_resource(RpiServer, "/dupa")
     api.add_resource(CheckStatus, "/checkStatus")
-    api.add_resource(RGB, "/RGB/<int:red>/<int:green>/<int:blue>")
+    api.add_resource(RGBSet, "/RGB/<int:red>/<int:green>/<int:blue>")
+    api.add_resource(RGBGet, "/RGB")
 
     app.run(debug=True, host="0.0.0.0", port=5000)
