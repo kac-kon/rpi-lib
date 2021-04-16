@@ -16,8 +16,14 @@ class RpiServer(Resource):
         response = jsonify([{"data": "CHUJ"}])
         return response
 
+class CheckStatus(Resource):
+    def get(self):
+        response = jsonify([{"status": "OK"}])
+        return response
+
 
 api.add_resource(RpiServer, "/dupa")
+api.add_resource(CheckStatus, "/checkStatus")
 
 
 class Buttons:
