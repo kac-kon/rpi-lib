@@ -67,3 +67,6 @@ class LED:
         self._var.led_red = color_array[0]
         self._var.led_green = color_array[1]
         self._var.led_blue = color_array[2]
+
+    def get_colors(self):
+        return [self._var.led_red, self._var.led_green, self._var.led_blue]
