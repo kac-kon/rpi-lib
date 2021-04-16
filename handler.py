@@ -73,9 +73,9 @@ if __name__ == "__main__":
     class RGB(Resource):
         def get(self):
             colors = hand.get_colors()
-            response = jsonify({"Red": colors[0]},
-                                {"Green": colors[1],
-                                 "Blue": colors[2]})
+            response = jsonify({"Red": colors[0],
+                                "Green": colors[1],
+                                "Blue": colors[2]})
             return response
 
         def post(self):
