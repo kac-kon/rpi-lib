@@ -78,16 +78,12 @@ if __name__ == "__main__":
                                 "Blue": colors[2]}])
             return response
 
-        def post(self):
-            json_data = request.get_json(force=True)
-            red = json_data['Red']
-            green = json_data['Green']
-            blue = json_data['Blue']
+        def post(self, red, green, blue):
             hand.set_colors([red, green, blue])
 
 
     api.add_resource(RpiServer, "/dupa")
     api.add_resource(CheckStatus, "/checkStatus")
-    api.add_resource(RGB, "/RGB")
+    api.add_resource(RGB, "/RGB/<int:red>/<int:green>/<int:blue>")
 
     app.run(debug=True, host="0.0.0.0", port=5000)
