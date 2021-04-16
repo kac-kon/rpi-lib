@@ -43,6 +43,8 @@ class MainHandler:
         self._but.register_button_callback(Buttons.button_pressed)
         self._ir.register_color_callback(self._ir_parser.color_keycode_received)
 
+        self.set_colors([50,50,100])
+
     def get_colors(self):
         return self._led.get_colors()
 
@@ -71,9 +73,9 @@ if __name__ == "__main__":
     class RGB(Resource):
         def get(self):
             colors = hand.get_colors()
-            response = jsonify([{"Red": colors[0]},
+            response = jsonify({"Red": colors[0]},
                                 {"Green": colors[1],
-                                 "Blue": colors[2]}])
+                                 "Blue": colors[2]})
             return response
 
         def post(self):
