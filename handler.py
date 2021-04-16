@@ -35,7 +35,7 @@ class MainHandler:
         self._led = LED()
         self._ir = IR()
         self._dis = Displays()
-        self._spec = Spec()
+        # self._spec = Spec()
 
         self._but.start_loop()
         self._ir_parser = IRParser(self._led)
