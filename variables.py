@@ -40,6 +40,7 @@ class ButtonsVar:
         self._notify_button_observer(button_number, new_state)
 
     def _notify_button_observer(self, button_number, new_value):
+        print("called")
         for callback in self._button_callbacks:
             callback(button_number, new_value)
 

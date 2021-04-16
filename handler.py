@@ -4,11 +4,20 @@ from led_control import LED
 from infrared import IR, irk
 from lcd_control import Displays
 from spectrum import Spec
-from flask import Flask
+from flask import Flask, jsonify
 from flask_restful import Api, Resource
 
 app = Flask("__name__")
 api = Api(app)
+
+
+class RpiServer(Resource):
+    def get(self):
+        response = jsonify({"data": "CHUJ"})
+        return response
+
+
+api.add_resource(RpiServer, "/dupa")
 
 
 class Buttons:
@@ -23,7 +32,6 @@ class IRParser:
 
     def color_keycode_received(self, keycode):
         self._led.set_color(irk.color_codes[keycode])
-
 
 
 class MainHandler:
@@ -41,20 +49,5 @@ class MainHandler:
         self._ir.register_color_callback(self._ir_parser.color_keycode_received)
 
 
-
-
-
 if __name__ == "__main__":
-    # b = ButtonsHandler()
-    # b.register_button_callback(Buttons.button_pressed)
-    # b.start_loop()
-    # time.sleep(5)
-    # b.exit_loop()
-
-    s = Spec()
-    s.start_monitoring()
-    t1 = time.time()
-    while t1 + 5 < time.time():
-        print(s.matrix)
-    s.stop_monitoring()
-
+    app.run(debug=True, host="0.0.0.0", port=6666)

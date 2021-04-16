@@ -25,6 +25,7 @@ class ButtonsHandler:
             for i in range(3):
                 if self.pressed[i] is False and data[i] > THRESHOLD:
                     if i == 0:
+                        print("1 pressed")
                         self.var.button_one = True
                     elif i == 1:
                         self.var.button_two = True
