@@ -98,6 +98,6 @@ if __name__ == "__main__":
     api.add_resource(CheckStatus, "/checkStatus")
     api.add_resource(RGBSet, "/RGB/<int:red>/<int:green>/<int:blue>")
     api.add_resource(RGBGet, "/RGB")
-    api.add_resource(Switches, "/switch/<int:switchID>/<boolean:state>")
+    api.add_resource(Switches, "/switch/<int:switchID>/<int:state>")
 
     app.run(debug=True, host="0.0.0.0", port=5000)
