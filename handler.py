@@ -134,7 +134,7 @@ if __name__ == "__main__":
             led_en = dict(zip(["led1", "led2"], led_enable))
             lcd_en = dict(zip(["lcd1", "lcd2"], lcd_enable))
 
-            response = jsonify([brtns, cols, led_en, lcd_en])
+            response = jsonify(brtns, cols, led_en, lcd_en)
             return response
 
 
