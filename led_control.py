@@ -25,6 +25,7 @@ class LED:
         random.seed()
 
         self._var.register_led_color_callback(self._catch_color_change)
+        self._var.register_led_enable_callback(self._catch_enable_change)
 
     def _catch_enable_change(self, strip, state):
         self._set_color()
