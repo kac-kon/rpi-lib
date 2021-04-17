@@ -130,15 +130,11 @@ if __name__ == "__main__":
 
 
             brtns = {"brightness": brightness}
-            r = {"r": colors[0]}
-            g = {"r": colors[0]}
-            b = {"r": colors[0]}
-            lcd1 = {"lcd1": lcd_enable[0]}
-            lcd2 = {"lcd2": lcd_enable[1]}
-            led1 = {"led1": led_enable[0]}
-            led2 = {"led2": led_enable[1]}
+            cols = dict(zip(["Red", "Green", "Blue"], colors))
+            led_en = dict(zip(["led1", "led2"], led_enable))
+            lcd_en = dict(zip(["lcd1", "lcd2"], lcd_enable))
 
-            response = jsonify([brtns, r, g, b, lcd1, lcd2, led1, led2])
+            response = jsonify([brtns, cols, led_en, lcd_en])
             return response
 
 
