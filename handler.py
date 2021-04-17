@@ -138,8 +138,8 @@ if __name__ == "__main__":
             led1 = {"led1": led_enable[0]}
             led2 = {"led2": led_enable[1]}
 
-            response = jsonify([brtns, r, g, b, lcd1, lcd2, led1, led2])
-            return response
+            # response = jsonify([brtns, r, g, b, lcd1, lcd2, led1, led2])
+            return jsonify(brtns)
 
 
     api.add_resource(RpiServer, "/dupa")
