@@ -43,13 +43,13 @@ class MainHandler:
         return self._led.get_colors()
 
     def get_lcd_background(self):
-        return self.get_lcd_background()
+        return self._dis.get_lcd_background()
 
     def get_strip_enable(self):
-        return self.get_strip_enable()
+        return self._led.get_strip_enable()
 
     def get_strip_brightness(self):
-        return self.get_strip_brightness()
+        return self._led.get_strip_brightness()
 
     def set_colors(self, colors):
         self._led.set_color(colors)
@@ -138,8 +138,8 @@ if __name__ == "__main__":
             led1 = {"led1": led_enable[0]}
             led2 = {"led2": led_enable[1]}
 
-            # response = jsonify([brtns, r, g, b, lcd1, lcd2, led1, led2])
-            return jsonify([{"brt": brightness}])
+            response = jsonify([brtns, r, g, b, lcd1, lcd2, led1, led2])
+            return response
 
 
 
