@@ -42,6 +42,15 @@ class MainHandler:
     def get_colors(self):
         return self._led.get_colors()
 
+    def get_lcd_background(self):
+        return self.get_lcd_background()
+
+    def get_strip_enable(self):
+        return self.get_strip_enable()
+
+    def get_strip_brightness(self):
+        return self.get_strip_brightness()
+
     def set_colors(self, colors):
         self._led.set_color(colors)
 
@@ -79,6 +88,10 @@ if __name__ == "__main__":
     class RGBSet(Resource):
         def post(self, red, green, blue):
             hand.set_colors([red, green, blue])
+            colors = hand.get_colors()
+            codes = ["Red", "Green", "Blue"]
+            response = dict(zip(codes, colors))
+            return jsonify(response)
 
 
     class RGBGet(Resource):
@@ -93,13 +106,38 @@ if __name__ == "__main__":
         def post(self, switchID, state):
             if switchID == 0 or switchID == 1:
                 hand.set_strip_enable(switchID, state)
+                response = jsonify(hand.get_strip_enable())
+                return response
             elif switchID == 2 or switchID == 3:
                 hand.set_lcd_background(switchID, state)
+                response = jsonify(hand.get_lcd_background())
+                return response
 
 
     class Brightness(Resource):
         def post(self, brightness):
             hand.set_strip_brightness(brightness)
+            response = jsonify(hand.get_strip_brightness())
+            return response
+
+
+    class State(Resource):
+        def get(self):
+            brightness = hand.get_strip_brightness()
+            colors = hand.get_colors()
+            lcd_enable = hand.get_strip_enable()
+            led_enable = hand.get_strip_enable()
+            brightnessID = ["brightness"]
+            colorsID = ["red", "green", "blue"]
+            lcd_enableID = ["LCD1", "LCD2"]
+            led_enableID = ["LED5", "LED12"]
+            brtns = dict(zip(brightnessID, brightness))
+            cols = dict(zip(colorsID, colors))
+            lcden = dict(zip(lcd_enableID, lcd_enable))
+            leden = dict(zip(led_enableID, lcd_enable))
+
+            response = jsonify(cols, brtns, lcden, leden)
+            return response
 
 
     api.add_resource(RpiServer, "/dupa")
@@ -108,5 +146,6 @@ if __name__ == "__main__":
     api.add_resource(RGBGet, "/RGB")
     api.add_resource(Switches, "/switch/<int:switchID>/<int:state>")
     api.add_resource(Brightness, "/brightness/<int:brightness>")
+    api.add_resource(State, "/state")
 
     app.run(debug=True, host="0.0.0.0", port=5000)

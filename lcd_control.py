@@ -64,3 +64,6 @@ class Displays:
         self._exit_datetime_event.set()
         self._thread_print_datetime.join()
         print('thread finished')
+
+    def get_lcd_background(self):
+        return [self._var.lcd2_backlight, self._var.lcd4_backlight]

@@ -85,6 +85,12 @@ class LED:
     def get_colors(self):
         return [self._var.led_red, self._var.led_green, self._var.led_blue]
 
+    def get_strip_enable(self):
+        return [self._var.led5_on, self._var.led12_on]
+
+    def get_strip_brightness(self):
+        return self._var.led_brightness
+
     def set_enable_state(self, strip, state):
         if strip == 0:
             self._var.led5_on = state
