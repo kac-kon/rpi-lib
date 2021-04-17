@@ -127,16 +127,18 @@ if __name__ == "__main__":
             colors = hand.get_colors()
             lcd_enable = hand.get_strip_enable()
             led_enable = hand.get_strip_enable()
-            brightnessID = ["brightness"]
-            colorsID = ["red", "green", "blue"]
-            lcd_enableID = ["LCD1", "LCD2"]
-            led_enableID = ["LED5", "LED12"]
-            brtns = dict(zip(brightnessID, brightness))
-            cols = dict(zip(colorsID, colors))
-            lcden = dict(zip(lcd_enableID, lcd_enable))
-            leden = dict(zip(led_enableID, lcd_enable))
 
-            response = jsonify(cols, brtns, lcden, leden)
+
+            brtns = {"brightness": brightness}
+            r = {"r": colors[0]}
+            g = {"r": colors[0]}
+            b = {"r": colors[0]}
+            lcd1 = {"lcd1": lcd_enable[0]}
+            lcd2 = {"lcd2": lcd_enable[1]}
+            led1 = {"led1": led_enable[0]}
+            led2 = {"led2": led_enable[1]}
+
+            response = jsonify([brtns, r, g, b, lcd1, lcd2, led1, led2])
             return response
 
 
