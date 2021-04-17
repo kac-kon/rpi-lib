@@ -142,6 +142,8 @@ if __name__ == "__main__":
             return jsonify([{"brt": brightness}])
 
 
+
+
     api.add_resource(RpiServer, "/dupa")
     api.add_resource(CheckStatus, "/checkStatus")
     api.add_resource(RGBSet, "/RGB/<int:red>/<int:green>/<int:blue>")
