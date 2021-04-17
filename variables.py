@@ -109,7 +109,7 @@ class LedVar:
 
     @led12_on.setter
     def led12_on(self, new_value):
-        led_strip = 0
+        led_strip = 1
         self._led12_on = new_value
         self._notify_led_enable_observer(led_strip, new_value)
 
@@ -119,7 +119,7 @@ class LedVar:
 
     @led5_on.setter
     def led5_on(self, new_value):
-        led_strip = 1
+        led_strip = 0
         self._led5_on = new_value
         self._notify_led_enable_observer(led_strip, new_value)
 
