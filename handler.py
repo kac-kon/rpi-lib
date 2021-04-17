@@ -54,6 +54,9 @@ class MainHandler:
     def set_strip_enable(self, strip, state):
         self._led.set_enable_state(strip, state)
 
+    def set_strip_brightness(self, new_value):
+        self._led.set_brightness(new_value)
+
 
 if __name__ == "__main__":
     app = Flask("__name__")
@@ -94,10 +97,16 @@ if __name__ == "__main__":
                 hand.set_lcd_background(switchID, state)
 
 
+    class Brightness(Resource):
+        def post(self, brightness):
+            hand.set_strip_brightness(brightness)
+
+
     api.add_resource(RpiServer, "/dupa")
     api.add_resource(CheckStatus, "/checkStatus")
     api.add_resource(RGBSet, "/RGB/<int:red>/<int:green>/<int:blue>")
     api.add_resource(RGBGet, "/RGB")
     api.add_resource(Switches, "/switch/<int:switchID>/<int:state>")
+    api.add_resource(Brightness, "/brightness/<int:brightness>")
 
     app.run(debug=True, host="0.0.0.0", port=5000)

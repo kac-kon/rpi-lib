@@ -90,3 +90,6 @@ class LED:
             self._var.led5_on = state
         elif strip == 1:
             self._var.led12_on = state
+
+    def set_brightness(self, new_value):
+        self._var.led_brightness = new_value
