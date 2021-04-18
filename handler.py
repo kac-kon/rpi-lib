@@ -42,7 +42,7 @@ class MainHandler:
         self._but.register_button_callback(Buttons.button_pressed)
         # self._ir.register_color_callback(self._ir_parser.color_keycode_received)
 
-        self.set_colors([50, 50, 100])
+        self.set_colors([50, 0, 0])
 
     def get_colors(self):
         return self._led.get_colors()
@@ -76,6 +76,9 @@ class MainHandler:
 
     def get_current_conditions(self):
         return self._weather.get_current_conditions()
+
+    def get_forecast_daily(self):
+        return self._weather.get_forecast_daily()
 
 
 if __name__ == "__main__":
@@ -180,6 +183,13 @@ if __name__ == "__main__":
             return jsonify(self.current)
 
 
+    class Forecast(Resource):
+        forecast = hand.get_forecast_daily()
+
+        def get(self):
+            return jsonify(self.forecast)
+
+
     api.add_resource(RpiServer, "/dupa")
     api.add_resource(CheckStatus, "/checkStatus")
     api.add_resource(RGBSet, "/RGB/<int:red>/<int:green>/<int:blue>")
@@ -190,5 +200,6 @@ if __name__ == "__main__":
     api.add_resource(Amplituner, "/amplituner/<int:code>")
     api.add_resource(Temperatures, "/temperatures")
     api.add_resource(Weather, "/weather")
+    api.add_resource(Forecast, "/forecast")
 
     app.run(debug=True, host="0.0.0.0", port=5000)
