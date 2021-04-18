@@ -27,7 +27,7 @@ class MainHandler:
     def __init__(self):
         self._but = ButtonsHandler()
         self._led = LED()
-        # self._ir = IR()
+        self._ir = IR()
         self._dis = Displays()
         # self._spec = Spec()
 
