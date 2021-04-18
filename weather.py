@@ -10,7 +10,8 @@ class Weather:
         self._config_dict['language'] = 'en'
         self._owm = OWM('5107288b7cd05e5e4d3a167c10eb87e4', self._config_dict)
         self._manager = self._owm.weather_manager()
-        self._current_conditions = self._manager.weather_at_coords(self._cords[0], self._cords[1]).weather
+        self._one_call = self._manager.one_call(self._cords[0], self._cords[1])
+        self._current_conditions = self._one_call.current
 
     @staticmethod
     def _degrees_to_cardinal(d):
@@ -50,7 +51,8 @@ class Weather:
         return "{}.{}".format(tmp[8:10], tmp[5:7])
 
     def _update_weather(self):
-        self._current_conditions = self._manager.weather_at_coords(self._cords[0], self._cords[1]).weather
+        self._one_call = self._manager.one_call(self._cords[0], self._cords[1])
+        self._current_conditions = self._one_call.current
 
     def _get_values(self):
         conditions = {
