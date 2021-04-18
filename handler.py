@@ -1,9 +1,13 @@
 import time, threading, numpy as np
+
+import subprocess
+
 import constants
 from button import ButtonsHandler
 from led_control import LED
 from infrared import IR, irk
 from lcd_control import Displays
+from weather import Weather
 from spectrum import Spec
 from flask import Flask, jsonify, request
 from flask_restful import Api, Resource
@@ -29,6 +33,7 @@ class MainHandler:
         self._led = LED()
         self._ir = IR()
         self._dis = Displays()
+        self._weather = Weather()
         # self._spec = Spec()
 
         self._but.start_loop()
@@ -68,6 +73,9 @@ class MainHandler:
 
     def send_ir_signal(self, key_code):
         self._ir.send_signal(key_code)
+
+    def get_current_conditions(self):
+        return self._weather.get_current_conditions()
 
 
 if __name__ == "__main__":
@@ -153,6 +161,25 @@ if __name__ == "__main__":
             hand.send_ir_signal(self.codes[code])
 
 
+    class Temperatures(Resource):
+        text = str(subprocess.check_output("sensors | grep temp1", stdin=subprocess.PIPE, shell=True))
+        core = text[text.find('+') + 1:text.find('+') + 5]
+        ambient = 22.4
+        outdoor = -2.2
+
+        def get(self):
+            return jsonify({'core': self.core,
+                            'ambient': self.ambient,
+                            'outdoor': self.outdoor})
+
+
+    class Weather(Resource):
+        current = hand.get_current_conditions()
+
+        def get(self):
+            return jsonify(self.current)
+
+
     api.add_resource(RpiServer, "/dupa")
     api.add_resource(CheckStatus, "/checkStatus")
     api.add_resource(RGBSet, "/RGB/<int:red>/<int:green>/<int:blue>")
@@ -161,5 +188,8 @@ if __name__ == "__main__":
     api.add_resource(Brightness, "/brightness/<int:brightness>")
     api.add_resource(State, "/state")
     api.add_resource(Amplituner, "/amplituner/<int:code>")
+    api.add_resource(Temperatures, "/temperatures")
+    api.add_resource(Weather, "/weather")
+
 
     app.run(debug=True, host="0.0.0.0", port=5000)
