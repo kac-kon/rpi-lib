@@ -119,7 +119,7 @@ if __name__ == "__main__":
     class Brightness(Resource):
         def post(self, brightness):
             hand.set_strip_brightness(brightness)
-            response = jsonify(dict(zip("brightness", hand.get_strip_brightness())))
+            response = jsonify(dict(zip(["brightness"], hand.get_strip_brightness())))
             return response
 
 

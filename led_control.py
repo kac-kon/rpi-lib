@@ -39,9 +39,12 @@ class LED:
 
     def _v12_set_color(self):
         if self._var.led12_on:
-            self._pi.set_PWM_dutycycle(constants.GPIO.GPIO_RED, int(self._var.led_red * self._var.led_brightness / constants.INITIALS.LED_BRIGHTNESS) )
-            self._pi.set_PWM_dutycycle(constants.GPIO.GPIO_GREEN, int(self._var.led_green * self._var.led_brightness / constants.INITIALS.LED_BRIGHTNESS) )
-            self._pi.set_PWM_dutycycle(constants.GPIO.GPIO_BLUE, int(self._var.led_blue * self._var.led_brightness / constants.INITIALS.LED_BRIGHTNESS))
+            self._pi.set_PWM_dutycycle(constants.GPIO.GPIO_RED, int(
+                self._var.led_red * self._var.led_brightness / constants.INITIALS.LED_BRIGHTNESS))
+            self._pi.set_PWM_dutycycle(constants.GPIO.GPIO_GREEN, int(
+                self._var.led_green * self._var.led_brightness / constants.INITIALS.LED_BRIGHTNESS))
+            self._pi.set_PWM_dutycycle(constants.GPIO.GPIO_BLUE, int(
+                self._var.led_blue * self._var.led_brightness / constants.INITIALS.LED_BRIGHTNESS))
         else:
             self._pi.set_PWM_dutycycle(constants.GPIO.GPIO_RED, 0)
             self._pi.set_PWM_dutycycle(constants.GPIO.GPIO_GREEN, 0)
@@ -50,9 +53,12 @@ class LED:
     def _v5_set_color(self):
         if self._var.led5_on:
             for i in range(0, self._var.led_strip_display, self._var.led_strip_direction):
-                self._strip.setPixelColorRGB(i, int(self._var.led_red * self._var.led_brightness / constants.INITIALS.LED_BRIGHTNESS),
-                                             int(self._var.led_green * self._var.led_brightness / constants.INITIALS.LED_BRIGHTNESS),
-                                             int(self._var.led_blue * self._var.led_brightness / constants.INITIALS.LED_BRIGHTNESS))
+                self._strip.setPixelColorRGB(i, int(
+                    self._var.led_red * self._var.led_brightness / constants.INITIALS.LED_BRIGHTNESS),
+                                             int(
+                                                 self._var.led_green * self._var.led_brightness / constants.INITIALS.LED_BRIGHTNESS),
+                                             int(
+                                                 self._var.led_blue * self._var.led_brightness / constants.INITIALS.LED_BRIGHTNESS))
             self._strip.show()
         else:
             for i in range(0, self._var.led_strip_display, self._var.led_strip_direction):
@@ -93,9 +99,15 @@ class LED:
 
     def set_enable_state(self, strip, state):
         if strip == 0:
-            self._var.led5_on = state
+            if state:
+                self._var.led5_on = True
+            else:
+                self._var.led5_on = False
         elif strip == 1:
-            self._var.led12_on = state
+            if state:
+                self._var.led12_on = True
+            else:
+                self._var.led12_on = False
 
     def set_brightness(self, new_value):
         self._var.led_brightness = new_value
