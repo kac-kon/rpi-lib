@@ -66,6 +66,9 @@ class MainHandler:
     def set_strip_brightness(self, new_value):
         self._led.set_brightness(new_value)
 
+    def send_ir_signal(self, key_code):
+        self._ir.send_signal(key_code)
+
 
 if __name__ == "__main__":
     app = Flask("__name__")
@@ -140,6 +143,16 @@ if __name__ == "__main__":
             return response
 
 
+    class Amplituner(Resource):
+        codes = {0: irk.yamaha['KEY_STANDBY'],
+                 1: irk.yamaha['KEY_SLEEP'],
+                 2: irk.yamaha['KEY_VOLUME_DOWN'],
+                 3: irk.yamaha['KEY_VOLUME_UP']}
+
+        def set(self, code):
+            hand.send_ir_signal(self.codes[code])
+
+
     api.add_resource(RpiServer, "/dupa")
     api.add_resource(CheckStatus, "/checkStatus")
     api.add_resource(RGBSet, "/RGB/<int:red>/<int:green>/<int:blue>")
@@ -147,5 +160,6 @@ if __name__ == "__main__":
     api.add_resource(Switches, "/switch/<int:switchID>/<int:state>")
     api.add_resource(Brightness, "/brightness/<int:brightness>")
     api.add_resource(State, "/state")
+    api.add_resource(Amplituner, "/amplituner/<int:code>")
 
     app.run(debug=True, host="0.0.0.0", port=5000)
