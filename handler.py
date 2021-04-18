@@ -102,6 +102,7 @@ if __name__ == "__main__":
                                  "Blue": colors[2]}])
             return response
 
+
     class Switches(Resource):
         def post(self, switchID, state):
             if switchID == 0 or switchID == 1:
@@ -119,7 +120,7 @@ if __name__ == "__main__":
     class Brightness(Resource):
         def post(self, brightness):
             hand.set_strip_brightness(brightness)
-            response = jsonify(dict(zip(["brightness"], hand.get_strip_brightness())))
+            response = jsonify({"brightness", hand.get_strip_brightness()})
             return response
 
 
@@ -129,7 +130,6 @@ if __name__ == "__main__":
             colors = hand.get_colors()
             lcd_enable = hand.get_strip_enable()
             led_enable = hand.get_strip_enable()
-
 
             brtns = {"brightness": brightness}
             cols = dict(zip(["Red", "Green", "Blue"], colors))
