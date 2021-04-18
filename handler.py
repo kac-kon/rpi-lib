@@ -149,7 +149,7 @@ if __name__ == "__main__":
                  2: irk.yamaha['KEY_VOLUME_DOWN'],
                  3: irk.yamaha['KEY_VOLUME_UP']}
 
-        def set(self, code):
+        def post(self, code):
             hand.send_ir_signal(self.codes[code])
 
 
