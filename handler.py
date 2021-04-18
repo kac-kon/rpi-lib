@@ -27,7 +27,7 @@ class MainHandler:
     def __init__(self):
         self._but = ButtonsHandler()
         self._led = LED()
-        self._ir = IR()
+        # self._ir = IR()
         self._dis = Displays()
         # self._spec = Spec()
 
@@ -35,7 +35,7 @@ class MainHandler:
         self._ir_parser = IRParser(self._led)
 
         self._but.register_button_callback(Buttons.button_pressed)
-        self._ir.register_color_callback(self._ir_parser.color_keycode_received)
+        # self._ir.register_color_callback(self._ir_parser.color_keycode_received)
 
         self.set_colors([50, 50, 100])
 
