@@ -58,8 +58,8 @@ class Weather:
         forecast = []
         for i in range (len(self._one_call.forecast_daily)):
             conditions = {
-                'temp_now': str(round(self._one_call.forecast_daily[i].temperature('celsius')['temp'], 1)),
-                'temp_feels': str(round(self._one_call.forecast_daily[i].temperature('celsius')['feels_like'], 1)),
+                'temp_now': str(round(self._one_call.forecast_daily[i].temperature('celsius')['day'], 1)),
+                'temp_feels': str(round(self._one_call.forecast_daily[i].temperature('celsius')['feels_like_day'], 1)),
                 'pressure_now': str(self._one_call.forecast_daily[i].pressure['press']),
                 'rain': str(self._one_call.forecast_daily[i].rain),
                 'snow': str(self._one_call.forecast_daily[i].snow),
