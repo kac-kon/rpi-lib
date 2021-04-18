@@ -106,18 +106,20 @@ if __name__ == "__main__":
         def post(self, switchID, state):
             if switchID == 0 or switchID == 1:
                 hand.set_strip_enable(switchID, state)
-                response = jsonify(hand.get_strip_enable())
+                ids = ["LED5", "LED12"]
+                response = jsonify(dict(zip(ids, hand.get_strip_enable())))
                 return response
             elif switchID == 2 or switchID == 3:
                 hand.set_lcd_background(switchID, state)
-                response = jsonify(hand.get_lcd_background())
+                ids = ["LCD0", "LCD1"]
+                response = jsonify(dict(zip(ids, hand.get_lcd_background())))
                 return response
 
 
     class Brightness(Resource):
         def post(self, brightness):
             hand.set_strip_brightness(brightness)
-            response = jsonify(hand.get_strip_brightness())
+            response = jsonify(dict(zip("brightness", hand.get_strip_brightness())))
             return response
 
 
@@ -136,8 +138,6 @@ if __name__ == "__main__":
 
             response = jsonify(brtns, cols, led_en, lcd_en)
             return response
-
-
 
 
     api.add_resource(RpiServer, "/dupa")
