@@ -80,6 +80,9 @@ class MainHandler:
     def get_forecast_daily(self):
         return self._weather.get_forecast_daily()
 
+    def get_forecast_hourly(self):
+        return self._weather.get_forecast_hourly()
+
 
 if __name__ == "__main__":
     app = Flask("__name__")
@@ -183,8 +186,15 @@ if __name__ == "__main__":
             return jsonify(self.current)
 
 
-    class Forecast(Resource):
+    class ForecastDaily(Resource):
         forecast = hand.get_forecast_daily()
+
+        def get(self):
+            return jsonify(self.forecast)
+
+
+    class ForecastHourly(Resource):
+        forecast = hand.get_forecast_hourly()
 
         def get(self):
             return jsonify(self.forecast)
@@ -200,6 +210,7 @@ if __name__ == "__main__":
     api.add_resource(Amplituner, "/amplituner/<int:code>")
     api.add_resource(Temperatures, "/temperatures")
     api.add_resource(Weather, "/weather")
-    api.add_resource(Forecast, "/forecast")
+    api.add_resource(ForecastDaily, "/forecast/daily")
+    api.add_resource(ForecastHourly, "/forecast/hourly")
 
     app.run(debug=True, host="0.0.0.0", port=5000)

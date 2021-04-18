@@ -75,6 +75,28 @@ class Weather:
             forecast.append(conditions)
         return forecast
 
+    def _get_forecast_hourly(self):
+        forecast = []
+        for i in range(len(self._one_call.forecast_hourly)):
+            conditions = {
+                'temp_now': str(round(self._one_call.forecast_daily[i].temperature('celsius')['temp'], 1)),
+                'temp_feels': str(round(self._one_call.forecast_daily[i].temperature('celsius')['feels_like'], 1)),
+                'pressure_now': str(self._one_call.forecast_daily[i].pressure['press']),
+                'rain': str(self._one_call.forecast_daily[i].rain),
+                'snow': str(self._one_call.forecast_daily[i].snow),
+                'wind_speed': str(int(round(self._one_call.forecast_daily[i].wind(unit='km_hour')['speed'], 0))),
+                'wind_direction': str(
+                    self._degrees_to_cardinal(self._one_call.forecast_daily[i].wind(unit='km_hour')['deg'])),
+                'humidity': str(self._one_call.forecast_daily[i].humidity),
+                'humidex': str(self._one_call.forecast_daily[i].humidex),
+                'ref_time': str(self._one_call.forecast_daily[i].reference_time('date') + datetime.timedelta(hours=1)),
+                'status': str(self._one_call.forecast_daily[i].status),
+                'detailed_status': str(self._one_call.forecast_daily[i].detailed_status),
+                'clouds': str(self._one_call.forecast_daily[i].clouds)
+            }
+            forecast.append(conditions)
+        return forecast
+
     def _get_current_values(self):
         conditions = {
             'temp_now': str(round(self._current_conditions.temperature('celsius')['temp'], 1)),
@@ -101,3 +123,7 @@ class Weather:
     def get_forecast_daily(self):
         self._update_weather()
         return self._get_forecast_daily()
+
+    def get_forecast_hourly(self):
+        self._update_weather()
+        return self._get_forecast_hourly()
