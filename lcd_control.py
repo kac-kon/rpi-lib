@@ -36,12 +36,12 @@ class Displays:
         self._lcd1.lcd_clear_line(20, 3)
         self._lcd1.lcd_clear_line(20, 4)
         self._lcd1.lcd_load_custom_chars([custom_chars.celc, custom_chars.arrows[int(conditions['wind_direction'])]])
-        self._lcd1.lcd_display_string(conditions['temp_now'], 2)
+        self._lcd1.lcd_display_string(conditions['temp'], 2)
         self._lcd1.lcd_write_char(0)
         self._lcd1.lcd_display_string(conditions['temp_feels'], 2, 6)
         self._lcd1.lcd_write_char(0)
         self._lcd1.lcd_display_string(
-            conditions['pressure_now'] + 'hPa ' + conditions['humidity'] + '% ' + conditions['wind_speed'] + 'km/h ', 3)
+            conditions['pressure'] + 'hPa ' + conditions['humidity'] + '% ' + conditions['wind_speed'] + 'km/h ', 3)
         self._lcd1.lcd_write_char(1)
         self._lcd1.lcd_display_string(conditions['detailed_status'], 4)
         if len(conditions['rain']) > 3:
