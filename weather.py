@@ -56,7 +56,7 @@ class Weather:
 
     def _get_forecast_daily(self):
         forecast = []
-        for i in range (len(self._one_call.forecast_daily)):
+        for i in range(len(self._one_call.forecast_daily)):
             conditions = {
                 'temp': str(round(self._one_call.forecast_daily[i].temperature('celsius')['day'], 1)),
                 'temp_feels': str(round(self._one_call.forecast_daily[i].temperature('celsius')['feels_like_day'], 1)),
