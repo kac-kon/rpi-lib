@@ -55,6 +55,7 @@ class Weather:
         self._current_conditions = self._one_call.current
 
     def _get_forecast_daily(self):
+        self._update_weather()
         forecast = []
         for i in range(len(self._one_call.forecast_daily)):
             conditions = {
@@ -77,6 +78,7 @@ class Weather:
         return forecast
 
     def _get_forecast_hourly(self):
+        self._update_weather()
         forecast = []
         for i in range(len(self._one_call.forecast_hourly)):
             conditions = {
