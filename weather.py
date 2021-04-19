@@ -113,7 +113,7 @@ class Weather:
             'wind_direction': str(self._degrees_to_cardinal(self._current_conditions.wind(unit='km_hour')['deg'])),
             'humidity': str(self._current_conditions.humidity),
             'humidex': str(self._current_conditions.humidex),
-            'ref_time': str(self._current_conditions.reference_time('date') + datetime.timedelta(hours=1)),
+            'ref_time': str(self._current_conditions.reference_time('date') + datetime.timedelta(hours=2)),
             'status': str(self._current_conditions.status),
             'detailed_status': str(self._current_conditions.detailed_status),
             'clouds': str(self._current_conditions.clouds),
