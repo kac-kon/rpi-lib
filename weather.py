@@ -72,7 +72,8 @@ class Weather:
                 'ref_time': str(self._one_call.forecast_daily[i].reference_time('date') + datetime.timedelta(hours=1)),
                 'status': str(self._one_call.forecast_daily[i].status),
                 'detailed_status': str(self._one_call.forecast_daily[i].detailed_status),
-                'clouds': str(self._one_call.forecast_daily[i].clouds)
+                'clouds': str(self._one_call.forecast_daily[i].clouds),
+                'icon': str(self._one_call.forecast_daily[i].weather_icon_name)
             }
             forecast.append(conditions)
         return forecast
@@ -95,7 +96,8 @@ class Weather:
                 'ref_time': str(self._one_call.forecast_hourly[i].reference_time('date') + datetime.timedelta(hours=1)),
                 'status': str(self._one_call.forecast_hourly[i].status),
                 'detailed_status': str(self._one_call.forecast_hourly[i].detailed_status),
-                'clouds': str(self._one_call.forecast_hourly[i].clouds)
+                'clouds': str(self._one_call.forecast_hourly[i].clouds),
+                'icon': str(self._one_call.forecast_hourly[i].weather_icon_name)
             }
             forecast.append(conditions)
         return forecast
@@ -114,7 +116,8 @@ class Weather:
             'ref_time': str(self._current_conditions.reference_time('date') + datetime.timedelta(hours=1)),
             'status': str(self._current_conditions.status),
             'detailed_status': str(self._current_conditions.detailed_status),
-            'clouds': str(self._current_conditions.clouds)
+            'clouds': str(self._current_conditions.clouds),
+            'icon': str(self._current_conditions.weather_icon_name)
         }
 
         return conditions
