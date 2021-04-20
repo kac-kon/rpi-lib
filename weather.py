@@ -52,11 +52,9 @@ class Weather:
 
     def _update_weather(self):
         self._one_call = self._manager.one_call(self._cords[0], self._cords[1])
-        print(self._one_call.forecast_hourly[0].reference_time('date') + datetime.timedelta(hours=2))
         self._current_conditions = self._one_call.current
 
     def _get_forecast_daily(self):
-        self._update_weather()
         forecast = []
         for i in range(len(self._one_call.forecast_daily)):
             conditions = {
@@ -80,7 +78,6 @@ class Weather:
         return forecast
 
     def _get_forecast_hourly(self):
-        self._update_weather()
         forecast = []
         for i in range(len(self._one_call.forecast_hourly)):
             conditions = {
@@ -132,7 +129,5 @@ class Weather:
         return self._get_forecast_daily()
 
     def get_forecast_hourly(self):
-        print(self._one_call.forecast_hourly[0].reference_time('date') + datetime.timedelta(hours=2))
         self._update_weather()
-        print(self._one_call.forecast_hourly[0].reference_time('date') + datetime.timedelta(hours=2))
         return self._get_forecast_hourly()

@@ -180,24 +180,24 @@ if __name__ == "__main__":
 
 
     class Weather(Resource):
-        current = hand.get_current_conditions()
 
         def get(self):
-            return jsonify(self.current)
+            current = hand.get_current_conditions()
+            return jsonify(current)
 
 
     class ForecastDaily(Resource):
-        forecast = hand.get_forecast_daily()
 
         def get(self):
-            return jsonify(self.forecast)
+            forecast = hand.get_forecast_daily()
+            return jsonify(forecast)
 
 
     class ForecastHourly(Resource):
-        forecast = hand.get_forecast_hourly()
 
         def get(self):
-            return jsonify(self.forecast)
+            forecast = hand.get_forecast_hourly()
+            return jsonify(forecast)
 
 
     api.add_resource(RpiServer, "/dupa")
