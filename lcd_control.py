@@ -23,10 +23,10 @@ class Displays:
     def set_backlight(self, lcd_id, state):
         if lcd_id == constants.LCD.ID_0:
             self._lcd0.backlight(state)
-            self._var.lcd2_backlight = state
+            self._var.lcd2_backlight = bool(state)
         elif lcd_id == constants.LCD.ID_1:
             self._lcd1.backlight(state)
-            self._var.lcd4_backlight = state
+            self._var.lcd4_backlight = bool(state)
 
     def print_weather(self):
         self._display_weather()
