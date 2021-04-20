@@ -132,5 +132,7 @@ class Weather:
         return self._get_forecast_daily()
 
     def get_forecast_hourly(self):
+        print(self._one_call.forecast_hourly[0].reference_time('date') + datetime.timedelta(hours=2))
         self._update_weather()
+        print(self._one_call.forecast_hourly[0].reference_time('date') + datetime.timedelta(hours=2))
         return self._get_forecast_hourly()
