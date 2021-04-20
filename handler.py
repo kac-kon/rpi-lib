@@ -168,15 +168,15 @@ if __name__ == "__main__":
 
 
     class Temperatures(Resource):
-        text = str(subprocess.check_output("sensors | grep temp1", stdin=subprocess.PIPE, shell=True))
-        core = float(text[text.find('+') + 1:text.find('+') + 5])
-        ambient = 22.4
-        outdoor = -2.2
 
         def get(self):
-            return jsonify({'core': self.core,
-                            'ambient': self.ambient,
-                            'outdoor': self.outdoor})
+            text = str(subprocess.check_output("sensors | grep temp1", stdin=subprocess.PIPE, shell=True))
+            core = float(text[text.find('+') + 1:text.find('+') + 5])
+            ambient = 22.4
+            outdoor = -2.2
+            return jsonify({'core': core,
+                            'ambient': ambient,
+                            'outdoor': outdoor})
 
 
     class Weather(Resource):
