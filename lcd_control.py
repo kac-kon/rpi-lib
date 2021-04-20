@@ -18,13 +18,15 @@ class Displays:
         self._thread_print_datetime = threading.Thread()
         self.print_weather()
 
-        self._var.register_lcd_callback(self.set_backlight)
+        # self._var.register_lcd_callback(self.set_backlight)
 
     def set_backlight(self, lcd_id, state):
         if lcd_id == constants.LCD.ID_0:
             self._lcd0.backlight(state)
+            self._var.lcd2_backlight = state
         elif lcd_id == constants.LCD.ID_1:
             self._lcd1.backlight(state)
+            self._var.lcd4_backlight = state
 
     def print_weather(self):
         self._display_weather()
