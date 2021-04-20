@@ -145,8 +145,8 @@ if __name__ == "__main__":
         def get(self):
             brightness = hand.get_strip_brightness()
             colors = hand.get_colors()
-            lcd_enable = hand.get_strip_enable()
-            led_enable = hand.get_lcd_background()
+            led_enable = hand.get_strip_enable()
+            lcd_enable = hand.get_lcd_background()
 
             brtns = {"brightness": brightness}
             cols = dict(zip(["Red", "Green", "Blue"], colors))
