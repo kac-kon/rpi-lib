@@ -66,4 +66,5 @@ class Displays:
         print('thread finished')
 
     def get_lcd_background(self):
+        print([self._var.lcd2_backlight, self._var.lcd4_backlight])
         return [self._var.lcd2_backlight, self._var.lcd4_backlight]
