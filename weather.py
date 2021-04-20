@@ -52,6 +52,7 @@ class Weather:
 
     def _update_weather(self):
         self._one_call = self._manager.one_call(self._cords[0], self._cords[1])
+        print(self._one_call.forecast_hourly[0].reference_time('date') + datetime.timedelta(hours=2))
         self._current_conditions = self._one_call.current
 
     def _get_forecast_daily(self):
