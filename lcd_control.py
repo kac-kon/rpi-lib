@@ -63,11 +63,12 @@ class Displays:
 
     def _start_print_datetime_short(self):
         t = time.time()
+        self._display_weather()
         while not (self._exit_datetime_event.is_set()):
             dt = self._weather.get_datetime_short()
             self._lcd1.lcd_display_string(dt, 1)
             time.sleep(.1)
-            if (time.time() - t) > 10:
+            if (time.time() - t) > 60*10:
                 t = time.time()
                 self._lcd1.lcd_clear()
                 self._display_weather()
