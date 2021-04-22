@@ -59,7 +59,7 @@ class Displays:
         self.start_print_datetime_short()
         t = time.time()
         while not self._exit_datetime_event.is_set():
-            if (time.time() - t) > 5:
+            if (time.time() - t) > 60*5:
                 t = time.time()
                 self.exit_print_datetime_short()
                 self._lcd1.lcd_clear()
@@ -81,7 +81,7 @@ class Displays:
     def exit_print_datetime_short(self):
         self._exit_datetime_event.set()
         self._thread_print_datetime.join()
-        print('thread finished')
+        # print('thread finished')
 
     def get_lcd_background(self):
         return [self._var.lcd2_backlight, self._var.lcd4_backlight]
