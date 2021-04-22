@@ -54,36 +54,21 @@ class Displays:
             rain = str(round(float(conditions['rain'][7:-1]), 1))
             self._lcd1.lcd_display_string(rain + 'mm', 4, 15)
 
-    def display_weather_and_time(self):
-        self._exit_datetime_event.clear()
-        self._thread_print_datetime_weather = threading.Thread(target=self._display_weather_and_time())
-        self._thread_print_datetime_weather.start()
-
-    def _display_weather_and_time(self):
-        if self._thread_print_datetime.is_alive():
-            self.exit_print_datetime_short()
-        self._display_weather()
-        self.start_print_datetime_short()
-        t = time.time()
-        while not self._exit_print_weather_event.is_set():
-            dt = self._weather.get_datetime_short()
-            self._lcd1.lcd_display_string(dt, 1)
-            time.sleep(.1)
-            if (time.time() - t) > 60*5:
-                t = time.time()
-                self._lcd1.lcd_clear()
-                self._display_weather()
-
     def start_print_datetime_short(self):
         self._exit_datetime_event.clear()
         self._thread_print_datetime = threading.Thread(target=self._start_print_datetime_short)
         self._thread_print_datetime.start()
 
     def _start_print_datetime_short(self):
+        t = time.time()
         while not (self._exit_datetime_event.is_set()):
             dt = self._weather.get_datetime_short()
             self._lcd1.lcd_display_string(dt, 1)
             time.sleep(.1)
+            if (time.time() - t) < 5:
+                t = time.time()
+                self._lcd1.lcd_clear()
+                self._display_weather()
         self._exit_datetime_event.clear()
 
     def exit_print_datetime_short(self):
