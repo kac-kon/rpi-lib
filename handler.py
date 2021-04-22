@@ -91,10 +91,12 @@ class MainHandler:
         return self._weather.get_forecast_hourly()
 
 
+
+hand = MainHandler()
+
 if __name__ == "__main__":
     app = Flask("__name__")
     api = Api(app)
-    hand = MainHandler()
 
 
     class RpiServer(Resource):
