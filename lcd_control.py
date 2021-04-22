@@ -53,7 +53,8 @@ class Displays:
             self._lcd1.lcd_display_string(rain + 'mm', 4, 15)
 
     def display_weather_and_time(self):
-        self.exit_print_datetime_short()
+        if self._thread_print_datetime.is_alive():
+            self.exit_print_datetime_short()
         self._display_weather()
         self.start_print_datetime_short()
         t = time.time()
