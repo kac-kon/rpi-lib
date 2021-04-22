@@ -44,6 +44,7 @@ class MainHandler:
 
         self.set_colors([50, 0, 0])
         self._dis.display_weather_and_time()
+        self.set_colors([50, 50, 0])
 
     def get_colors(self):
         return self._led.get_colors()
