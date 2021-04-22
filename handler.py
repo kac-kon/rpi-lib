@@ -96,7 +96,6 @@ if __name__ == "__main__":
     app = Flask("__name__")
     api = Api(app)
     hand = MainHandler()
-    hand.start_display_weather()
 
 
     class RpiServer(Resource):

@@ -55,6 +55,8 @@ class Displays:
             self._lcd1.lcd_display_string(rain + 'mm', 4, 15)
 
     def start_print_datetime_short(self):
+        if self._thread_print_datetime.is_alive():
+            self.exit_print_datetime_short()
         self._exit_datetime_event.clear()
         self._thread_print_datetime = threading.Thread(target=self._start_print_datetime_short)
         self._thread_print_datetime.start()
