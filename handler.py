@@ -43,7 +43,6 @@ class MainHandler:
         # self._ir.register_color_callback(self._ir_parser.color_keycode_received)
 
         self.set_colors([50, 0, 0])
-        # self._dis.start_print_datetime_short()
         self.set_colors([50, 50, 0])
 
     def start_display_weather(self):

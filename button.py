@@ -10,7 +10,7 @@ class ButtonsHandler:
     def __init__(self):
         self.adc = MCP3008()
         self.var = ButtonsVar()
-        self.pressed = [0, 0, 0]
+        self.pressed = [False, False, False]
         self._exit_event = threading.Event()
         self._thread_loop = threading.Thread()
 
