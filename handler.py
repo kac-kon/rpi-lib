@@ -45,6 +45,9 @@ class MainHandler:
         self.set_colors([50, 0, 0])
         self.set_colors([50, 50, 0])
 
+    def register_button_callback(self, callback):
+        self._but.register_button_callback(callback)
+
     def start_display_weather(self):
         self._dis.start_print_datetime_short()
 
@@ -208,13 +211,15 @@ if __name__ == "__main__":
 
 
     class LCD(Resource):
-        def post(self, mode):
-            if mode:
+        @staticmethod
+        def weather_switch(num, value):
+            if num == 1:
                 hand.start_display_weather()
-            else:
+            elif num == 2:
                 hand.stop_display_weather()
 
 
+    hand.register_button_callback(LCD.weather_switch)
     api.add_resource(RpiServer, "/dupa")
     api.add_resource(CheckStatus, "/checkStatus")
     api.add_resource(RGBSet, "/RGB/<int:red>/<int:green>/<int:blue>")
