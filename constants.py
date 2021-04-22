@@ -54,5 +54,5 @@ class AUDIO:
 
 
 class TEMP:
-    OUTDOOR = 0
-    AMBIENT = 1
+    AMBIENT = 0
+    OUTDOOR = 1
