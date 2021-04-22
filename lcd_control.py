@@ -77,6 +77,7 @@ class Displays:
     def exit_print_datetime_short(self):
         self._exit_datetime_event.set()
         self._thread_print_datetime.join()
+        self._lcd1.lcd_clear()
         # print('thread finished')
 
     def get_lcd_background(self):
