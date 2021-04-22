@@ -91,12 +91,10 @@ class MainHandler:
         return self._weather.get_forecast_hourly()
 
 
-
-hand = MainHandler()
-
 if __name__ == "__main__":
     app = Flask("__name__")
     api = Api(app)
+    hand = MainHandler()
 
 
     class RpiServer(Resource):
@@ -231,4 +229,4 @@ if __name__ == "__main__":
     api.add_resource(ForecastHourly, "/forecast/hourly")
     api.add_resource(LCD, "/LCD/<int:mode>")
 
-    app.run(debug=True, host="0.0.0.0", port=5000)
+    app.run(debug=False, host="0.0.0.0", port=5000)
