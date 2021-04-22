@@ -43,8 +43,14 @@ class MainHandler:
         # self._ir.register_color_callback(self._ir_parser.color_keycode_received)
 
         self.set_colors([50, 0, 0])
-        self._dis.start_print_datetime_short()
+        # self._dis.start_print_datetime_short()
         self.set_colors([50, 50, 0])
+
+    def start_display_weather(self):
+        self._dis.start_print_datetime_short()
+
+    def stop_display_weather(self):
+        self._dis.exit_print_datetime_short()
 
     def get_colors(self):
         return self._led.get_colors()
@@ -90,6 +96,7 @@ if __name__ == "__main__":
     app = Flask("__name__")
     api = Api(app)
     hand = MainHandler()
+    hand.start_display_weather()
 
 
     class RpiServer(Resource):
