@@ -95,6 +95,7 @@ if __name__ == "__main__":
     app = Flask("__name__")
     api = Api(app)
     hand = MainHandler()
+    hand.start_display_weather()
 
 
     class RpiServer(Resource):
@@ -175,7 +176,6 @@ if __name__ == "__main__":
 
 
     class Temperatures(Resource):
-
         def get(self):
             text = str(subprocess.check_output("sensors | grep temp1", stdin=subprocess.PIPE, shell=True))
             core = float(text[text.find('+') + 1:text.find('+') + 5])
