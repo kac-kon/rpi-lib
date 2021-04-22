@@ -40,7 +40,9 @@ class Displays:
         self._lcd1.lcd_load_custom_chars([custom_chars.celc, custom_chars.arrows[int(conditions['wind_direction'])]])
         self._lcd1.lcd_display_string(conditions['temp'], 2)
         self._lcd1.lcd_write_char(0)
-        self._lcd1.lcd_display_string(conditions['temp_feels'], 2, 6)
+        self._lcd1.lcd_display_string(conditions['temp_outdoor'], 2, 6)
+        self._lcd1.lcd_write_char(0)
+        self._lcd1.lcd_display_string(conditions['temp_ambient'], 2, 12)
         self._lcd1.lcd_write_char(0)
         self._lcd1.lcd_display_string(
             conditions['pressure'] + 'hPa ' + conditions['humidity'] + '% ' + conditions['wind_speed'] + 'km/h ', 3)
@@ -49,6 +51,19 @@ class Displays:
         if len(conditions['rain']) > 3:
             rain = str(round(float(conditions['rain'][7:-1]), 1))
             self._lcd1.lcd_display_string(rain + 'mm', 4, 15)
+
+    def display_weather_and_time(self):
+        self.exit_print_datetime_short()
+        self._display_weather()
+        self.start_print_datetime_short()
+        t = time.time()
+        while not self._exit_datetime_event.is_set():
+            if (time.time() - t) > 60*3:
+                t = time.time()
+                self.exit_print_datetime_short()
+                self._lcd1.lcd_clear()
+                self._display_weather()
+                self.start_print_datetime_short()
 
     def start_print_datetime_short(self):
         self._exit_datetime_event.clear()

@@ -1,6 +1,11 @@
 import datetime
+import time
+
+import glob
 from pyowm.owm import OWM
 from pyowm.utils.config import get_default_config
+
+import constants
 
 
 class Weather:
@@ -50,6 +55,27 @@ class Weather:
         tmp = str(datetime.datetime.now().today())
         return "{}.{}".format(tmp[8:10], tmp[5:7])
 
+    @staticmethod
+    def _read_temp_raw(device: int):
+        base_dir = '/sys/bus/w1/devices/'
+        device_folder = glob.glob(base_dir + '28*')[device]
+        device_file = device_folder + '/w1_slave'
+        f = open(device_file, 'r')
+        lines = f.readlines()
+        f.close()
+        return lines
+
+    def get_temp(self, device: int):
+        lines = self._read_temp_raw(device)
+        while lines[0].strip()[-3:] != 'YES':
+            time.sleep(0.2)
+            lines = self._read_temp_raw(device)
+        equals_pos = lines[1].find('t=')
+        if equals_pos != -1:
+            temp_string = lines[1][equals_pos + 2:]
+            temp_c = float(temp_string) / 1000.0
+            return temp_c
+
     def _update_weather(self):
         self._one_call = self._manager.one_call(self._cords[0], self._cords[1])
         self._current_conditions = self._one_call.current
@@ -72,7 +98,9 @@ class Weather:
                 'status': str(self._one_call.forecast_daily[i].status),
                 'detailed_status': str(self._one_call.forecast_daily[i].detailed_status),
                 'clouds': str(self._one_call.forecast_daily[i].clouds),
-                'icon': str(self._one_call.forecast_daily[i].weather_icon_name)
+                'icon': str(self._one_call.forecast_daily[i].weather_icon_name),
+                'temp_ambient': str(self.get_temp(constants.TEMP.AMBIENT)),
+                'temp_outdoor': str(self.get_temp(constants.TEMP.OUTDOOR))
             }
             forecast.append(conditions)
         return forecast
@@ -95,7 +123,9 @@ class Weather:
                 'status': str(self._one_call.forecast_hourly[i].status),
                 'detailed_status': str(self._one_call.forecast_hourly[i].detailed_status),
                 'clouds': str(self._one_call.forecast_hourly[i].clouds),
-                'icon': str(self._one_call.forecast_hourly[i].weather_icon_name)
+                'icon': str(self._one_call.forecast_hourly[i].weather_icon_name),
+                'temp_ambient': str(self.get_temp(constants.TEMP.AMBIENT)),
+                'temp_outdoor': str(self.get_temp(constants.TEMP.OUTDOOR))
             }
             forecast.append(conditions)
         return forecast
@@ -115,7 +145,9 @@ class Weather:
             'status': str(self._current_conditions.status),
             'detailed_status': str(self._current_conditions.detailed_status),
             'clouds': str(self._current_conditions.clouds),
-            'icon': str(self._current_conditions.weather_icon_name)
+            'icon': str(self._current_conditions.weather_icon_name),
+            'temp_ambient': str(self.get_temp(constants.TEMP.AMBIENT)),
+            'temp_outdoor': str(self.get_temp(constants.TEMP.OUTDOOR))
         }
 
         return conditions
