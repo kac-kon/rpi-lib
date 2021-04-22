@@ -96,7 +96,6 @@ if __name__ == "__main__":
     app = Flask("__name__")
     api = Api(app)
     hand = MainHandler()
-    hand.start_display_weather()
 
 
     class RpiServer(Resource):
@@ -209,6 +208,14 @@ if __name__ == "__main__":
             return jsonify(forecast)
 
 
+    class LCD(Resource):
+        def post(self, mode):
+            if mode:
+                hand.start_display_weather()
+            else:
+                hand.stop_display_weather()
+
+
     api.add_resource(RpiServer, "/dupa")
     api.add_resource(CheckStatus, "/checkStatus")
     api.add_resource(RGBSet, "/RGB/<int:red>/<int:green>/<int:blue>")
@@ -221,5 +228,6 @@ if __name__ == "__main__":
     api.add_resource(Weather, "/weather")
     api.add_resource(ForecastDaily, "/forecast/daily")
     api.add_resource(ForecastHourly, "/forecast/hourly")
+    api.add_resource(LCD, "/LCD/<int:mode")
 
     app.run(debug=True, host="0.0.0.0", port=5000)
