@@ -18,7 +18,7 @@ class Displays:
         self._thread_print_datetime = threading.Thread()
         self._thread_print_datetime_weather = threading.Thread()
         self._exit_print_weather_event = threading.Event()
-        self.print_weather()
+        # self.print_weather()
 
         # self._var.register_lcd_callback(self.set_backlight)
 
