@@ -43,6 +43,7 @@ class MainHandler:
         # self._ir.register_color_callback(self._ir_parser.color_keycode_received)
 
         self.set_colors([50, 0, 0])
+        self._dis.display_weather_and_time()
 
     def get_colors(self):
         return self._led.get_colors()

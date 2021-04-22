@@ -58,7 +58,7 @@ class Displays:
         self.start_print_datetime_short()
         t = time.time()
         while not self._exit_datetime_event.is_set():
-            if (time.time() - t) > 60*3:
+            if (time.time() - t) > 5:
                 t = time.time()
                 self.exit_print_datetime_short()
                 self._lcd1.lcd_clear()
