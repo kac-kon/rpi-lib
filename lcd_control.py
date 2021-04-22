@@ -16,6 +16,8 @@ class Displays:
 
         self._exit_datetime_event = threading.Event()
         self._thread_print_datetime = threading.Thread()
+        self._thread_print_datetime_weather = threading.Thread()
+        self._exit_print_weather_event = threading.Event()
         self.print_weather()
 
         # self._var.register_lcd_callback(self.set_backlight)
@@ -54,8 +56,8 @@ class Displays:
 
     def display_weather_and_time(self):
         self._exit_datetime_event.clear()
-        self._thread_print_datetime = threading.Thread(target=self._display_weather_and_time())
-        self._thread_print_datetime.start()
+        self._thread_print_datetime_weather = threading.Thread(target=self._display_weather_and_time())
+        self._thread_print_datetime_weather.start()
 
     def _display_weather_and_time(self):
         if self._thread_print_datetime.is_alive():
@@ -63,7 +65,7 @@ class Displays:
         self._display_weather()
         self.start_print_datetime_short()
         t = time.time()
-        while not self._exit_datetime_event.is_set():
+        while not self._exit_print_weather_event.is_set():
             if (time.time() - t) > 60*5:
                 t = time.time()
                 self.exit_print_datetime_short()
