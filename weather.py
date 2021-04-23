@@ -1,5 +1,5 @@
 import datetime
-import concurrent.futures
+import threading
 
 import subprocess, tempfile
 from pyowm.owm import OWM
@@ -77,18 +77,23 @@ class Weather:
 
     def _update_weather(self):
         print("0")
-        with concurrent.futures.ThreadPoolExecutor() as executor:
-            future = executor.submit(self._manager.one_call, self._cords[0], self._cords[1])
-            self._one_call = future.result()
+        t1 = threading.Thread(target=self._update_temperatures())
+        t2 = threading.Thread(target=self._update_one_call())
+        t1.start()
         print("1")
-        with concurrent.futures.ThreadPoolExecutor() as executor:
-            future = executor.submit(self._read_temp_raw)
-            self._current_temperatures = future.result()
+        t2.start()
         print("2")
-        # self._one_call = self._manager.one_call(self._cords[0], self._cords[1])
-        # self._current_temperatures = self._read_temp_raw()
-        self._current_conditions = self._one_call.current
+        t1.join()
+        t2.join()
         print("3")
+        self._current_conditions = self._one_call.current
+        print("4")
+
+    def _update_temperatures(self):
+        self._current_temperatures = self._read_temp_raw()
+
+    def _update_one_call(self):
+        self._one_call = self._manager.one_call(self._cords[0], self._cords[1])
 
     def _get_forecast_daily(self):
         forecast = []
