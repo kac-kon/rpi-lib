@@ -11,7 +11,7 @@ from weather import Weather
 from spectrum import Spec
 from flask import Flask, jsonify, request
 from flask_restful import Api, Resource
-from api import Api as rpiApi
+from api import Apis as rpiApi
 
 
 class Buttons:
@@ -100,14 +100,15 @@ if __name__ == "__main__":
     api = Api(app)
     hand = MainHandler()
     hand.start_display_weather()
+    apis = rpiApi(hand)
 
 
 
     # hand.register_button_callback(LCD.weather_switch)
     # api.add_resource(RpiServer, "/dupa")
-    api.add_resource(rpiApi.CheckStatus, "/checkStatus")
-    api.add_resource(rpiApi.RGBSet, "/RGB/<int:red>/<int:green>/<int:blue>")
-    api.add_resource(rpiApi.RGBGet, "/RGB")
+    api.add_resource(apis.CheckStatus, "/checkStatus")
+    api.add_resource(apis.RGBSet, "/RGB/<int:red>/<int:green>/<int:blue>")
+    api.add_resource(apis.RGBGet, "/RGB")
     # api.add_resource(Switches, "/switch/<int:switchID>/<int:state>")
     # api.add_resource(Brightness, "/brightness/<int:brightness>")
     # api.add_resource(State, "/state")

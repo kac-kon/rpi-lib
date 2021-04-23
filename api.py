@@ -3,7 +3,7 @@ from flask_restful import Resource
 from flask import jsonify
 
 
-class Api:
+class Apis:
     def __init__(self, hand: MainHandler):
         self.hand = hand
 
