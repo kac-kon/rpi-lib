@@ -76,13 +76,19 @@ class Weather:
         return self._current_temperatures
 
     def _update_weather(self):
+        print("0")
         with concurrent.futures.ThreadPoolExecutor() as executor:
             future = executor.submit(self._manager.one_call, self._cords[0], self._cords[1])
             self._one_call = future.result()
-
+        print("1")
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            future = executor.submit(self._read_temp_raw)
+            self._current_temperatures = future.result()
+        print("2")
         # self._one_call = self._manager.one_call(self._cords[0], self._cords[1])
-        self._current_temperatures = self._read_temp_raw()
+        # self._current_temperatures = self._read_temp_raw()
         self._current_conditions = self._one_call.current
+        print("3")
 
     def _get_forecast_daily(self):
         forecast = []
