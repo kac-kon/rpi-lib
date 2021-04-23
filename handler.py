@@ -33,8 +33,8 @@ class MainHandler:
         self._but = ButtonsHandler()
         self._led = LED()
         self._ir = IR()
-        self._dis = Displays()
         self._weather = Weather()
+        self._dis = Displays(self._weather)
         # self._spec = Spec()
 
         self._but.start_loop()
