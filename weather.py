@@ -100,8 +100,6 @@ class Weather:
                 'detailed_status': str(self._one_call.forecast_daily[i].detailed_status),
                 'clouds': str(self._one_call.forecast_daily[i].clouds),
                 'icon': str(self._one_call.forecast_daily[i].weather_icon_name),
-                'temp_ambient': str(self.get_temp(constants.TEMP.AMBIENT)),
-                'temp_outdoor': str(self.get_temp(constants.TEMP.OUTDOOR))
             }
             forecast.append(conditions)
         print("returning get forecast")
@@ -126,8 +124,6 @@ class Weather:
                 'detailed_status': str(self._one_call.forecast_hourly[i].detailed_status),
                 'clouds': str(self._one_call.forecast_hourly[i].clouds),
                 'icon': str(self._one_call.forecast_hourly[i].weather_icon_name),
-                'temp_ambient': str(self.get_temp(constants.TEMP.AMBIENT)),
-                'temp_outdoor': str(self.get_temp(constants.TEMP.OUTDOOR))
             }
             forecast.append(conditions)
         return forecast
