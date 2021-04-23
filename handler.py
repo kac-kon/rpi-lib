@@ -92,3 +92,6 @@ class MainHandler:
 
     def get_forecast_hourly(self):
         return self._weather.get_forecast_hourly()
+
+    def get_current_temperatures(self):
+        return self._weather.get_temps()

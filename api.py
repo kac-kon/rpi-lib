@@ -4,7 +4,6 @@ from handler import MainHandler
 import ir_remote_keybinding as irk
 import subprocess, tempfile
 
-
 if __name__ == "__main__":
     app = Flask("__name__")
     api = Api(app)
@@ -89,23 +88,11 @@ if __name__ == "__main__":
 
 
     class Temperatures(Resource):
-        def __init__(self):
-            self.lines = []
-
         def get(self):
-            with tempfile.TemporaryFile() as tempf:
-                proc = subprocess.Popen("sensors | grep temp1", stdin=subprocess.PIPE, shell=True)
-                proc.wait()
-                tempf.seek(0)
-                self.lines = tempf.readlines()
-                tempf.ty
-
-            core = float(text[text.find('+') + 1:text.find('+') + 5])
-            ambient = 22.4
-            outdoor = -2.2
-            return jsonify({'core': core,
-                            'ambient': ambient,
-                            'outdoor': outdoor})
+            temps = hand.get_current_temperatures()
+            return jsonify({'outdoor': temps[0],
+                            'core': temps[1],
+                            'ambient': temps[2], })
 
 
     class Weather(Resource):

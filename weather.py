@@ -76,18 +76,13 @@ class Weather:
         return self._current_temperatures
 
     def _update_weather(self):
-        print("0")
         t1 = threading.Thread(target=self._update_temperatures())
         t2 = threading.Thread(target=self._update_one_call())
         t1.start()
-        print("1")
         t2.start()
-        print("2")
         t1.join()
         t2.join()
-        print("3")
         self._current_conditions = self._one_call.current
-        print("4")
 
     def _update_temperatures(self):
         self._current_temperatures = self._read_temp_raw()
