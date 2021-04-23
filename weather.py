@@ -157,7 +157,9 @@ class Weather:
         return self._get_current_values()
 
     def get_forecast_daily(self):
+        print("in weather before update")
         self._update_weather()
+        print("in weather after update")
         return self._get_forecast_daily()
 
     def get_forecast_hourly(self):

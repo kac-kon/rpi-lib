@@ -199,6 +199,7 @@ if __name__ == "__main__":
     class ForecastDaily(Resource):
 
         def get(self):
+            print("get called")
             forecast = hand.get_forecast_daily()
             return jsonify(forecast)
 
