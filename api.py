@@ -1,14 +1,13 @@
-from handler import MainHandler
 from flask_restful import Resource
 from flask import jsonify
 
 
 class Apis:
-    def __init__(self, hand: MainHandler):
+    def __init__(self, hand):
         self.hand = hand
 
     class CheckStatus(Resource):
-        def __init__(self, hand: MainHandler):
+        def __init__(self, hand):
             super(self).__init__()
             self.hand = hand
 
@@ -17,7 +16,7 @@ class Apis:
             return response
 
     class RGBSet(Resource):
-        def __init__(self, hand: MainHandler):
+        def __init__(self, hand):
             super(self).__init__()
             self.hand = hand
 
@@ -29,7 +28,7 @@ class Apis:
             return jsonify(response)
 
     class RGBGet(Resource):
-        def __init__(self, hand: MainHandler):
+        def __init__(self, hand):
             super(self).__init__()
             self.hand = hand
 
