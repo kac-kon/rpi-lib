@@ -8,9 +8,9 @@ from weather import Weather
 
 
 class Displays:
-    def __init__(self):
+    def __init__(self, weather: Weather):
         self._var = LcdVar()
-        self._weather = Weather()
+        self._weather = weather
         self._lcd0 = drivers.lcd_driver.lcd(constants.LCD.ID_0, backlight=self._var.lcd2_backlight)
         self._lcd1 = drivers.lcd_driver.lcd(constants.LCD.ID_1, backlight=self._var.lcd4_backlight)
 
