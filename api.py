@@ -8,7 +8,7 @@ class Apis:
 
     class CheckStatus(Resource):
         def __init__(self, hand):
-            super(self).__init__()
+            super(self).__init__(hand)
             self.hand = hand
 
         def get(self):
