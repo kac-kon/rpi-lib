@@ -146,8 +146,9 @@ class Weather:
             'detailed_status': str(self._current_conditions.detailed_status),
             'clouds': str(self._current_conditions.clouds),
             'icon': str(self._current_conditions.weather_icon_name),
-            'temp_ambient': str(self.get_temp(constants.TEMP.AMBIENT)),
-            'temp_outdoor': str(self.get_temp(constants.TEMP.OUTDOOR))
+            'temp_ambient': str(self._current_temperatures[2]),
+            'temp_outdoor': str(self._current_temperatures[0]),
+            'temp_core': str(self._current_temperatures[1])
         }
 
         return conditions
