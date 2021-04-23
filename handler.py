@@ -201,8 +201,10 @@ if __name__ == "__main__":
         def get(self):
             print("get called")
             forecast = hand.get_forecast_daily()
-            print("returning")
-            return jsonify(forecast)
+            print("got forecast")
+            x = jsonify(forecast)
+            print("returning get")
+            return x
 
 
     class ForecastHourly(Resource):

@@ -81,6 +81,7 @@ class Weather:
         self._current_conditions = self._one_call.current
 
     def _get_forecast_daily(self):
+        print("in get forecast")
         forecast = []
         for i in range(len(self._one_call.forecast_daily)):
             conditions = {
@@ -103,6 +104,7 @@ class Weather:
                 'temp_outdoor': str(self.get_temp(constants.TEMP.OUTDOOR))
             }
             forecast.append(conditions)
+        print("returning get forecast")
         return forecast
 
     def _get_forecast_hourly(self):
@@ -160,7 +162,9 @@ class Weather:
         print("in weather before update")
         self._update_weather()
         print("in weather after update")
-        return self._get_forecast_daily()
+        forecast = self._get_forecast_daily()
+        print("in weather before returning")
+        return forecast
 
     def get_forecast_hourly(self):
         self._update_weather()
