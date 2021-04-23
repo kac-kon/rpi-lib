@@ -201,6 +201,7 @@ if __name__ == "__main__":
         def get(self):
             print("get called")
             forecast = hand.get_forecast_daily()
+            print("returning")
             return jsonify(forecast)
 
 
@@ -235,4 +236,4 @@ if __name__ == "__main__":
     api.add_resource(ForecastHourly, "/forecast/hourly")
     api.add_resource(LCD, "/LCD/<int:mode>")
 
-    app.run(debug=False, host="0.0.0.0", port=5000)
+    app.run(debug=True, host="0.0.0.0", port=5000)
