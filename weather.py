@@ -1,7 +1,7 @@
 import datetime
-import time
+import concurrent.futures
 
-import glob
+import subprocess, tempfile
 from pyowm.owm import OWM
 from pyowm.utils.config import get_default_config
 
@@ -17,6 +17,7 @@ class Weather:
         self._manager = self._owm.weather_manager()
         self._one_call = self._manager.one_call(self._cords[0], self._cords[1])
         self._current_conditions = self._one_call.current
+        self._current_temperatures = self._read_temp_raw()
 
     @staticmethod
     def _degrees_to_cardinal(d):
@@ -56,32 +57,34 @@ class Weather:
         return "{}.{}".format(tmp[8:10], tmp[5:7])
 
     @staticmethod
-    def _read_temp_raw(device: int):
-        base_dir = '/sys/bus/w1/devices/'
-        device_folder = glob.glob(base_dir + '28*')[device]
-        device_file = device_folder + '/w1_slave'
-        f = open(device_file, 'r')
-        lines = f.readlines()
-        f.close()
-        return lines
+    def _read_temp_raw():
+        with tempfile.TemporaryFile() as tempf:
+            proc = subprocess.Popen("sensors | grep temp1", stdin=subprocess.PIPE, shell=True, stdout=tempf)
+            proc.wait()
+            tempf.seek(0)
+            lines = tempf.readlines()
+            temps = []
+            for i in range(3):
+                line = str(lines[i])
+                start_pos = line.find('+') + 1
+                end_pos = line.find('\\')
+                temps.append(float(line[start_pos: end_pos]))
+            return temps
 
-    def get_temp(self, device: int):
-        lines = self._read_temp_raw(device)
-        while lines[0].strip()[-3:] != 'YES':
-            time.sleep(0.2)
-            lines = self._read_temp_raw(device)
-        equals_pos = lines[1].find('t=')
-        if equals_pos != -1:
-            temp_string = lines[1][equals_pos + 2:]
-            temp_c = round(float(temp_string) / 1000.0, 1)
-            return temp_c
+    def get_temps(self):
+        self._current_temperatures = self._read_temp_raw()
+        return self._current_temperatures
 
     def _update_weather(self):
-        self._one_call = self._manager.one_call(self._cords[0], self._cords[1])
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            future = executor.submit(self._manager.one_call, self._cords[0], self._cords[1])
+            self._one_call = future.result()
+
+        # self._one_call = self._manager.one_call(self._cords[0], self._cords[1])
+        self._current_temperatures = self._read_temp_raw()
         self._current_conditions = self._one_call.current
 
     def _get_forecast_daily(self):
-        print("in get forecast")
         forecast = []
         for i in range(len(self._one_call.forecast_daily)):
             conditions = {
@@ -102,7 +105,6 @@ class Weather:
                 'icon': str(self._one_call.forecast_daily[i].weather_icon_name),
             }
             forecast.append(conditions)
-        print("returning get forecast")
         return forecast
 
     def _get_forecast_hourly(self):
@@ -155,11 +157,8 @@ class Weather:
         return self._get_current_values()
 
     def get_forecast_daily(self):
-        print("in weather before update")
         self._update_weather()
-        print("in weather after update")
         forecast = self._get_forecast_daily()
-        print("in weather before returning")
         return forecast
 
     def get_forecast_hourly(self):
