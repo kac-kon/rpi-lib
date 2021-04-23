@@ -2,42 +2,37 @@ from flask_restful import Resource
 from flask import jsonify
 
 
-class Apis:
+class CheckStatus(Resource):
     def __init__(self, hand):
         self.hand = hand
 
-    class CheckStatus(Resource):
-        def __init__(self, hand):
-            super(self).__init__(hand)
-            self.hand = hand
+    def get(self):
+        response = jsonify([{"status": "OK"}])
+        return response
 
-        def get(self):
-            response = jsonify([{"status": "OK"}])
-            return response
 
-    class RGBSet(Resource):
-        def __init__(self, hand):
-            super(self).__init__()
-            self.hand = hand
+class RGBSet(Resource):
+    def __init__(self, hand):
+        self.hand = hand
 
-        def post(self, red, green, blue):
-            self.hand.set_colors([red, green, blue])
-            colors = self.hand.get_colors()
-            codes = ["Red", "Green", "Blue"]
-            response = dict(zip(codes, colors))
-            return jsonify(response)
+    def post(self, red, green, blue):
+        self.hand.set_colors([red, green, blue])
+        colors = self.hand.get_colors()
+        codes = ["Red", "Green", "Blue"]
+        response = dict(zip(codes, colors))
+        return jsonify(response)
 
-    class RGBGet(Resource):
-        def __init__(self, hand):
-            super(self).__init__()
-            self.hand = hand
 
-        def get(self):
-            colors = self.hand.get_colors()
-            response = jsonify([{"Red": colors[0],
-                                 "Green": colors[1],
-                                 "Blue": colors[2]}])
-            return response
+class RGBGet(Resource):
+    def __init__(self, hand):
+        self.hand = hand
+
+    def get(self):
+        colors = self.hand.get_colors()
+        response = jsonify([{"Red": colors[0],
+                             "Green": colors[1],
+                             "Blue": colors[2]}])
+        return response
     #
     # class Switches(Resource):
     #     def post(self, switchID, state):
