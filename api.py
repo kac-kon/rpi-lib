@@ -8,10 +8,6 @@ class Api:
         self.hand = hand
         self.app = app
 
-        self.app.config['host'] = '0.0.0.0'
-        self.app.config['port'] = 5000
-        self.app.config['debug'] = False
-
         self.app.add_url_rule('/status', 'getStatus', self.getStatus, methods=['GET'])
         self.app.add_url_rule('/RGB/<int:red>/<int:green>/<int:blue>', 'setRGB', self.setRGB, methods=['POST'])
         self.app.add_url_rule('/RGB', 'getRGB', self.getRGB, methods=['GET'])
