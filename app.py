@@ -10,6 +10,4 @@ if __name__ == "__main__":
     hand = MainHandler()
     api = Api(app, hand)
 
-    hand.register_button_callback(api.weatherSwitch)
-
     app.run()
