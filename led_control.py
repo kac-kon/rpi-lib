@@ -27,6 +27,15 @@ class LED:
         self._var.register_led_color_callback(self._catch_color_change)
         self._var.register_led_enable_callback(self._catch_enable_change)
 
+    @staticmethod
+    def random_colors():
+        c1 = random.randint(0, 1) * 255
+        c2 = random.randint(0, 1) * 255
+        c3 = random.randint(0, 1) * 255
+        if c1 == c2 == c3 == 0:
+            return [255, 255, 255]
+        return [255, 255, 255]
+
     def _catch_enable_change(self, strip, state):
         self._set_color()
 

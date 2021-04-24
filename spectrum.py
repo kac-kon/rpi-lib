@@ -1,12 +1,17 @@
+import time
+
 from constants import AUDIO
 import threading
 import pyaudio
+import random
 from struct import unpack
 import numpy as np
+from led_control import LED
 
 
 class Spec:
-    def __init__(self, device=AUDIO.DEFAULT_DEVICE):
+    def __init__(self, led: LED, device=AUDIO.DEFAULT_DEVICE):
+        self._led = led
         self._device = device
         self.matrix = np.zeros(10)
         self.weighting = AUDIO.WEIGHTING
@@ -14,6 +19,14 @@ class Spec:
         self.sensitivity = np.array(AUDIO.SENSITIVENESS)
         self._spec_thread = threading.Thread()
         self._exit_event = threading.Event()
+        self._auto_thread = threading.Thread()
+        self._auto_exit_event = threading.Event()
+        self._fading_thread = threading.Thread()
+        self._fading_exit_event = threading.Event()
+        self._inertia = 0.1
+        self._analyzed_frequency = 1
+        self._fade_speed = 20
+        random.seed()
 
         self.p = pyaudio.PyAudio()
         self.stream = self.p.open(format=pyaudio.paInt16,
@@ -45,7 +58,7 @@ class Spec:
         power = np.abs(fourier)
         for i in range(10):
             matrix[i] = (int(np.max(power[self._piff(self.frequencies[i]): self._piff(self.frequencies[i+1]): 1])) / 10) ** self.sensitivity[i+1]
-        matrix = np.divide(np.multiply(matrix, self.weighting), 1_000_000 / self.sensitivity[0]).astype(int)
+        matrix = np.divide(np.multiply(matrix, self.weighting), 10_000_000 / self.sensitivity[0]).astype(int)
         self.matrix = matrix.clip(0, 255)
 
     def catch_bit(self):
@@ -65,3 +78,45 @@ class Spec:
     def stop_monitoring(self):
         self._exit_event.set()
         self._spec_thread.join()
+
+    def start_auto(self):
+        if self._auto_thread.is_alive():
+            self._auto_exit_event.set()
+            self._auto_thread.join()
+        self._auto_exit_event.clear()
+        self._auto_thread = threading.Thread(target=self._start_auto)
+        self._auto_thread.start()
+
+    def stop_auto(self):
+        self._auto_exit_event.set()
+        self._auto_thread.join()
+
+    def _start_auto(self):
+        while not self._auto_exit_event.is_set():
+            self.catch_bit()
+            time_0 = time.time()
+            level = self.matrix[self._analyzed_frequency]
+
+            if level > 150:
+                time_1 = time.time()
+                if time_1 - time_0 > self._inertia:
+                    time_0 = time.time()
+                    if self._fading_thread.is_alive():
+                        self._fading_exit_event.set()
+                        self._fading_thread.join()
+                    self._fading_thread = threading.Thread(target=self._fade_away())
+                    self._fading_exit_event.clear()
+                    self._fading_thread.start()
+
+    def _fade_away(self):
+        brightness = 255
+        colors = self._led.random_colors()
+        self._led.set_color(colors)
+        self._led.set_brightness(brightness)
+        time.sleep(0.1)
+        while brightness > 0:
+            if self._fading_exit_event.is_set():
+                return
+            self._led.set_brightness(brightness)
+            brightness -= self._fade_speed
+            time.sleep(0.2)

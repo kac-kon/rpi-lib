@@ -25,6 +25,7 @@ class Api:
         self.app.add_url_rule(rule='/forecast/hourly', view_func=self.getForecastHourly, methods=['GET'])
 
         self.hand.register_button_callback(self.weatherSwitch)
+        self.hand.register_button_callback(self.autoLEDSwitch)
 
     @staticmethod
     def getStatus():
@@ -104,3 +105,10 @@ class Api:
                 self.hand.start_display_weather()
             elif num == 2:
                 self.hand.stop_display_weather()
+
+    def autoLEDSwitch(self, num, state):
+        if state:
+            if num == 1:
+                self.hand.start_auto_led()
+            elif num == 2:
+                self.hand.stop_auto_led()

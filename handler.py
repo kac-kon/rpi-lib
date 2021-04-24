@@ -34,16 +34,22 @@ class MainHandler:
         self._ir = IR()
         self._weather = Weather()
         self._dis = Displays(self._weather)
-        # self._spec = Spec()
+        self._spec = Spec(self._led)
 
         self._but.start_loop()
         self._ir_parser = IRParser(self._led)
 
-        self._but.register_button_callback(Buttons.button_pressed)
+        # self._but.register_button_callback(Buttons.button_pressed)
         # self._ir.register_color_callback(self._ir_parser.color_keycode_received)
 
         self.set_colors([50, 0, 0])
-        self.set_colors([50, 50, 0])
+        self.set_colors([255, 255, 0])
+
+    def start_auto_led(self):
+        self._spec.start_auto()
+
+    def stop_auto_led(self):
+        self._spec.stop_auto()
 
     def register_button_callback(self, callback):
         self._but.register_button_callback(callback)
