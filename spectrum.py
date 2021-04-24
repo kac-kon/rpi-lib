@@ -26,6 +26,7 @@ class Spec:
         self._inertia = 0.1
         self._analyzed_frequency = 1
         self._fade_speed = 20
+        self._time0 = time.time()
         random.seed()
 
         self.p = pyaudio.PyAudio()
@@ -94,21 +95,16 @@ class Spec:
     def _start_auto(self):
         while not self._auto_exit_event.is_set():
             self.catch_bit()
-            time_0 = time.time()
             level = self.matrix[self._analyzed_frequency]
-            print("working")
             time.sleep(0.05)
 
             if level > 150:
-                print("level more")
                 time_1 = time.time()
-                if time_1 - time_0 > self._inertia:
-                    print("time ok")
-                    time_0 = time.time()
+                if time_1 - self._time0 > self._inertia:
+                    self._time0 = time.time()
                     if self._fading_thread.is_alive():
                         self._fading_exit_event.set()
                         self._fading_thread.join()
-                        print("joined thread")
                     self._fading_thread = threading.Thread(target=self._fade_away())
                     self._fading_exit_event.clear()
                     self._fading_thread.start()
