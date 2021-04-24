@@ -58,7 +58,7 @@ class Spec:
         power = np.abs(fourier)
         for i in range(10):
             matrix[i] = (int(np.max(power[self._piff(self.frequencies[i]): self._piff(self.frequencies[i+1]): 1])) / 10) ** self.sensitivity[i+1]
-        matrix = np.divide(np.multiply(matrix, self.weighting), 10_000_000 / self.sensitivity[0]).astype(int)
+        matrix = np.divide(np.multiply(matrix, self.weighting), 10_000_000 / (self.sensitivity[0] * 32)).astype(int)
         self.matrix = matrix.clip(0, 255)
 
     def catch_bit(self):
