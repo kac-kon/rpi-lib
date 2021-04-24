@@ -1,11 +1,30 @@
 from handler import MainHandler
-from flask import jsonify, request
+from flask import jsonify, request, Flask
 import ir_remote_keybinding as irk
 
 
 class Api:
-    def __init__(self, hand: MainHandler):
+    def __init__(self, app: Flask, hand: MainHandler):
         self.hand = hand
+        self.app = app
+
+        self.app.config['host'] = '0.0.0.0'
+        self.app.config['port'] = 5000
+        self.app.config['debug'] = False
+
+        self.app.add_url_rule(rule='/status', view_func=self.getStatus, methods=['GET'])
+        self.app.add_url_rule(rule='/RGB/<int:red>/<int:green>/<int:blue>', view_func=self.setRGB, methods=['POST'])
+        self.app.add_url_rule(rule='/RGB', view_func=self.getRGB, methods=['GET'])
+        self.app.add_url_rule(rule='/switch/<int:switchID>/<int:state>', view_func=self.setSwitches, methods=['POST'])
+        self.app.add_url_rule(rule='/brightness/<int:brightness>', view_func=self.setBrightness, methods=['POST'])
+        self.app.add_url_rule(rule='/state', view_func=self.getCurrentState, methods=['GET'])
+        self.app.add_url_rule(rule='/amplituner/<int:code>', view_func=self.setAmplituner, methods=['POST'])
+        self.app.add_url_rule(rule='/temperatures', view_func=self.getTemperatures, methods=['GET'])
+        self.app.add_url_rule(rule='/weather', view_func=self.getCurrentWeather, methods=['GET'])
+        self.app.add_url_rule(rule='/forecast/daily', view_func=self.getForecastDaily, methods=['GET'])
+        self.app.add_url_rule(rule='/forecast/hourly', view_func=self.getForecastHourly, methods=['GET'])
+
+        self.hand.register_button_callback(self.weatherSwitch)
 
     @staticmethod
     def getStatus():
