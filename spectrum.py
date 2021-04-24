@@ -119,4 +119,4 @@ class Spec:
                 return
             self._led.set_brightness(brightness)
             brightness -= self._fade_speed
-            time.sleep(0.2)
+            # time.sleep(0.2)
