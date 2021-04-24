@@ -23,7 +23,7 @@ class Api:
         self.app.add_url_rule(rule='/weather', view_func=self.getCurrentWeather, methods=['GET'])
         self.app.add_url_rule(rule='/forecast/daily', view_func=self.getForecastDaily, methods=['GET'])
         self.app.add_url_rule(rule='/forecast/hourly', view_func=self.getForecastHourly, methods=['GET'])
-        self.app.add_url_rule(rule='/spec/<int:sensitivity>/<int:inertia>/<int:freq>',
+        self.app.add_url_rule(rule='/spec/<int:sensitivity>/<float:inertia>/<int:freq>',
                               view_func=self.setSpecConfig, methods=['POST'])
 
         self.hand.register_button_callback(self.weatherSwitch)
