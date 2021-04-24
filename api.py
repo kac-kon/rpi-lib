@@ -12,19 +12,19 @@ class Api:
         self.app.config['port'] = 5000
         self.app.config['debug'] = False
 
-        self.app.add_url_rule(rule='/status', view_func=self.getStatus, methods=['GET'])
-        self.app.add_url_rule(rule='/RGB/<int:red>/<int:green>/<int:blue>', view_func=self.setRGB, methods=['POST'])
-        self.app.add_url_rule(rule='/RGB', view_func=self.getRGB, methods=['GET'])
-        self.app.add_url_rule(rule='/switch/<int:switchID>/<int:state>', view_func=self.setSwitches, methods=['POST'])
-        self.app.add_url_rule(rule='/brightness/<int:brightness>', view_func=self.setBrightness, methods=['POST'])
-        self.app.add_url_rule(rule='/state', view_func=self.getCurrentState, methods=['GET'])
-        self.app.add_url_rule(rule='/amplituner/<int:code>', view_func=self.setAmplituner, methods=['POST'])
-        self.app.add_url_rule(rule='/temperatures', view_func=self.getTemperatures, methods=['GET'])
-        self.app.add_url_rule(rule='/weather', view_func=self.getCurrentWeather, methods=['GET'])
-        self.app.add_url_rule(rule='/forecast/daily', view_func=self.getForecastDaily, methods=['GET'])
-        self.app.add_url_rule(rule='/forecast/hourly', view_func=self.getForecastHourly, methods=['GET'])
-        self.app.add_url_rule(rule='/spec/<int:sensitivity>/<float:inertia>/<int:freq>',
-                              view_func=self.setSpecConfig, methods=['POST'])
+        self.app.add_url_rule('/status', 'getStatus', self.getStatus, methods=['GET'])
+        self.app.add_url_rule('/RGB/<int:red>/<int:green>/<int:blue>', 'setRGB', self.setRGB, methods=['POST'])
+        self.app.add_url_rule('/RGB', 'getRGB', self.getRGB, methods=['GET'])
+        self.app.add_url_rule('/switch/<int:switchID>/<int:state>', 'setSwitches', self.setSwitches, methods=['POST'])
+        self.app.add_url_rule('/brightness/<int:brightness>', 'setBrightness', self.setBrightness, methods=['POST'])
+        self.app.add_url_rule('/state', 'getCurrentState', self.getCurrentState, methods=['GET'])
+        self.app.add_url_rule('/amplituner/<int:code>', 'setAmplituner', self.setAmplituner, methods=['POST'])
+        self.app.add_url_rule('/temperatures', 'getTemperatures', self.getTemperatures, methods=['GET'])
+        self.app.add_url_rule('/weather', 'getCurrentWeather', self.getCurrentWeather, methods=['GET'])
+        self.app.add_url_rule('/forecast/daily', 'getForecastDaily', self.getForecastDaily, methods=['GET'])
+        self.app.add_url_rule('/forecast/hourly', 'getForecastDaily', self.getForecastHourly, methods=['GET'])
+        self.app.add_url_rule('/spec/<int:sensitivity>/<float:inertia>/<int:freq>', 'setSpecConfig',
+                              self.setSpecConfig, methods=['POST'])
 
         self.hand.register_button_callback(self.weatherSwitch)
         self.hand.register_button_callback(self.autoLEDSwitch)
