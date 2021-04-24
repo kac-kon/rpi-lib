@@ -34,7 +34,7 @@ class LED:
         c3 = random.randint(0, 1) * 255
         if c1 == c2 == c3 == 0:
             return [255, 255, 255]
-        return [255, 255, 255]
+        return [c1, c2, c3]
 
     def _catch_enable_change(self, strip, state):
         self._set_color()

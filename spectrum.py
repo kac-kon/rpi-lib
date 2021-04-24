@@ -23,9 +23,9 @@ class Spec:
         self._auto_exit_event = threading.Event()
         self._fading_thread = threading.Thread()
         self._fading_exit_event = threading.Event()
-        self._inertia = 0.1
+        self._inertia = 0.2
         self._analyzed_frequency = 1
-        self._fade_speed = 20
+        self._fade_speed = 15
         self._time0 = time.time()
         random.seed()
 
@@ -120,4 +120,4 @@ class Spec:
                 return
             self._led.set_brightness(brightness)
             brightness -= self._fade_speed
-            # time.sleep(0.2)
+        self._led.set_brightness(0)
