@@ -96,14 +96,19 @@ class Spec:
             self.catch_bit()
             time_0 = time.time()
             level = self.matrix[self._analyzed_frequency]
+            print("working")
+            time.sleep(0.05)
 
             if level > 150:
+                print("level more")
                 time_1 = time.time()
                 if time_1 - time_0 > self._inertia:
+                    print("time ok")
                     time_0 = time.time()
                     if self._fading_thread.is_alive():
                         self._fading_exit_event.set()
                         self._fading_thread.join()
+                        print("joined thread")
                     self._fading_thread = threading.Thread(target=self._fade_away())
                     self._fading_exit_event.clear()
                     self._fading_thread.start()
