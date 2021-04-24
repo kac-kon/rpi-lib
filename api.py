@@ -79,8 +79,9 @@ class Api:
         forecast = self.hand.get_forecast_hourly()
         return jsonify(forecast)
 
-    def weatherSwitch(self, num):
-        if num == 1:
-            self.hand.start_display_weather()
-        elif num == 2:
-            self.hand.stop_display_weather()
+    def weatherSwitch(self, num, state):
+        if state:
+            if num == 1:
+                self.hand.start_display_weather()
+            elif num == 2:
+                self.hand.stop_display_weather()
