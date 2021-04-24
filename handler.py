@@ -101,3 +101,15 @@ class MainHandler:
 
     def get_current_temperatures(self):
         return self._weather.get_temps()
+
+    def auto_is_alive(self):
+        return self._spec.auto_is_alive()
+
+    def set_sensitivity(self, new_value):
+        self._spec.set_sensitivity(new_value)
+
+    def set_inertia(self, new_value):
+        self._spec.set_inertia(new_value)
+
+    def set_analyzed_frequency(self, new_value):
+        self._spec.set_analyzed_frequency(new_value)

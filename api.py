@@ -23,6 +23,8 @@ class Api:
         self.app.add_url_rule(rule='/weather', view_func=self.getCurrentWeather, methods=['GET'])
         self.app.add_url_rule(rule='/forecast/daily', view_func=self.getForecastDaily, methods=['GET'])
         self.app.add_url_rule(rule='/forecast/hourly', view_func=self.getForecastHourly, methods=['GET'])
+        self.app.add_url_rule(rule='/spec/<int:sensitivity>/<int:inertia>/<int:freq>',
+                              view_func=self.setSpecConfig, methods=['POST'])
 
         self.hand.register_button_callback(self.weatherSwitch)
         self.hand.register_button_callback(self.autoLEDSwitch)
@@ -107,8 +109,13 @@ class Api:
                 self.hand.stop_display_weather()
 
     def autoLEDSwitch(self, num, state):
-        if state:
-            if num == 1:
-                self.hand.start_auto_led()
-            elif num == 2:
+        if state and num == 3:
+            if self.hand.auto_is_alive():
                 self.hand.stop_auto_led()
+            elif not self.hand.auto_is_alive():
+                self.hand.start_auto_led()
+
+    def setSpecConfig(self, sensitivity, inertia, freq):
+        self.hand.set_sensitivity(sensitivity)
+        self.hand.set_inertia(inertia)
+        self.hand.set_analyzed_frequency(freq)
