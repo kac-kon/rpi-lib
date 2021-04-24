@@ -22,7 +22,7 @@ class Api:
         self.app.add_url_rule('/temperatures', 'getTemperatures', self.getTemperatures, methods=['GET'])
         self.app.add_url_rule('/weather', 'getCurrentWeather', self.getCurrentWeather, methods=['GET'])
         self.app.add_url_rule('/forecast/daily', 'getForecastDaily', self.getForecastDaily, methods=['GET'])
-        self.app.add_url_rule('/forecast/hourly', 'getForecastDaily', self.getForecastHourly, methods=['GET'])
+        self.app.add_url_rule('/forecast/hourly', 'getForecastHourly', self.getForecastHourly, methods=['GET'])
         self.app.add_url_rule('/spec/<int:sensitivity>/<float:inertia>/<int:freq>', 'setSpecConfig',
                               self.setSpecConfig, methods=['POST'])
 
