@@ -24,8 +24,6 @@ class Api:
         self.app.add_url_rule(rule='/forecast/daily', view_func=self.getForecastDaily, methods=['GET'])
         self.app.add_url_rule(rule='/forecast/hourly', view_func=self.getForecastHourly, methods=['GET'])
 
-        self.hand.register_button_callback(self.weatherSwitch)
-
     @staticmethod
     def getStatus():
         return jsonify([{'status': 'OK'}])
