@@ -44,7 +44,7 @@ class LCD:
 
 
 class AUDIO:
-    DEFAULT_DEVICE = 2
+    DEFAULT_DEVICE = 1
     NO_CHANNELS = 1
     SAMPLE_RATE = 44100
     CHUNK = 768
