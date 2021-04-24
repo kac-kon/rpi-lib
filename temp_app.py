@@ -11,7 +11,7 @@ if __name__ == "__main__":
     hand = MainHandler()
     api = Api(hand)
 
-    app.add_url_rule('/status', 'status', api.getStatus)
-    app.add_url_rule('/RGB/<int:red>/<int:green>/<int:blue>', 'RGB', api.setRGB)
+    app.add_url_rule(rule='/status', view_func=api.getStatus, methods=['GET'])
+    app.add_url_rule(rule='/RGB/<int:red>/<int:green>/<int:blue>', view_func=api.setRGB, methods=['POST'])
 
     app.run(host='0.0.0.0', port=5000)
