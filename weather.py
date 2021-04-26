@@ -66,7 +66,7 @@ class Weather:
             temps = []
             for i in range(3):
                 line = str(lines[i])
-                start_pos = line.find('+') + 1
+                start_pos = (line.find('+') + 1 or line.find('-'))
                 end_pos = line.find('\\')
                 temps.append(float(line[start_pos: end_pos]))
             return temps
@@ -152,8 +152,8 @@ class Weather:
             'detailed_status': str(self._current_conditions.detailed_status),
             'clouds': str(self._current_conditions.clouds),
             'icon': str(self._current_conditions.weather_icon_name),
-            'temp_ambient': str(self._current_temperatures[2]),
-            'temp_outdoor': str(self._current_temperatures[0]),
+            'temp_ambient': str(self._current_temperatures[0]),
+            'temp_outdoor': str(self._current_temperatures[2]),
             'temp_core': str(self._current_temperatures[1])
         }
 
