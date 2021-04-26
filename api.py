@@ -81,7 +81,7 @@ class Api:
 
     def getTemperatures(self):
         temps = self.hand.get_current_temperatures()
-        codes = ['outdoor', 'core', 'ambient']
+        codes = ['ambient', 'core', 'outdoor']
         response = dict(zip(codes, temps))
         return response
 
