@@ -8,7 +8,7 @@ class Api:
         self.hand = hand
         self.app = app
 
-        self.app.add_url_rule('/status', 'getStatus', self.getStatus, methods=['GET'])
+        self.app.add_url_rule('/checkStatus', 'getStatus', self.getStatus, methods=['GET'])
         self.app.add_url_rule('/RGB/<int:red>/<int:green>/<int:blue>', 'setRGB', self.setRGB, methods=['POST'])
         self.app.add_url_rule('/RGB', 'getRGB', self.getRGB, methods=['GET'])
         self.app.add_url_rule('/switch/<int:switchID>/<int:state>', 'setSwitches', self.setSwitches, methods=['POST'])
