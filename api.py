@@ -25,6 +25,10 @@ class Api:
         self.hand.register_button_callback(self.weatherSwitch)
         self.hand.register_button_callback(self.autoLEDSwitch)
 
+#######################################
+#   REST API ENDPOINTS
+#######################################
+
     @staticmethod
     def getStatus():
         return jsonify([{'status': 'OK'}])
@@ -43,16 +47,18 @@ class Api:
         return response
 
     def setSwitches(self, switchID, state):
-        if switchID in [0,1]:
+        if switchID in [0, 1]:
             self.hand.set_strip_enable(switchID, state)
             ids = ["LED5", "LED12"]
             response = jsonify(dict(zip(ids, self.hand.get_strip_enable())))
             return response
-        elif switchID in [2,3]:
+        elif switchID in [2, 3]:
             self.hand.set_lcd_background(switchID, state)
             ids = ["LCD0", "LCD1"]
             response = jsonify(dict(zip(ids, self.hand.get_lcd_background())))
             return response
+        elif switchID in [4]:
+            self.setAutoLED(state)
 
     def setBrightness(self, brightness):
         self.hand.set_strip_brightness(brightness)
@@ -68,8 +74,9 @@ class Api:
         cols = dict(zip(["Red", "Green", "Blue"], colors))
         led_en = dict(zip(["led1", "led2"], led_enable))
         lcd_en = dict(zip(["lcd1", "lcd2"], lcd_enable))
+        auto_en = {"auto_led": self.hand.auto_is_alive()}
 
-        response = jsonify(brtns, cols, led_en, lcd_en)
+        response = jsonify(brtns, cols, led_en, lcd_en, auto_en)
         return response
 
     def setAmplituner(self, code):
@@ -97,6 +104,21 @@ class Api:
         forecast = self.hand.get_forecast_hourly()
         return jsonify(forecast)
 
+    def setAutoLED(self, new_state):
+        if new_state:
+            self.hand.start_auto_led()
+        else:
+            self.hand.stop_auto_led()
+
+    def setSpecConfig(self, sensitivity, inertia, freq):
+        self.hand.set_sensitivity(sensitivity)
+        self.hand.set_inertia(inertia)
+        self.hand.set_analyzed_frequency(freq)
+
+#######################################
+#   BUTTONS ENDPOINTS
+#######################################
+
     def weatherSwitch(self, num, state):
         if state:
             if num == 1:
@@ -110,8 +132,3 @@ class Api:
                 self.hand.stop_auto_led()
             elif not self.hand.auto_is_alive():
                 self.hand.start_auto_led()
-
-    def setSpecConfig(self, sensitivity, inertia, freq):
-        self.hand.set_sensitivity(sensitivity)
-        self.hand.set_inertia(inertia)
-        self.hand.set_analyzed_frequency(freq)
