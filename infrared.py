@@ -70,7 +70,8 @@ class IR:
         while self._timer_time > 0 and not self._timer_event.is_set():
             self._timer_event.wait(60)
             self._timer_time -= 1
-        self.send_signal(irk.yamaha['KEY_STANDBY'])
+        if not self._timer_event.is_set():
+            self.send_signal(irk.yamaha['KEY_STANDBY'])
 
     def get_state(self):
         codes = ["enabled", "timer"]
