@@ -74,6 +74,6 @@ class IR:
             self.send_signal(irk.yamaha['KEY_STANDBY'])
 
     def get_state(self):
-        codes = ["enabled", "timer"]
-        response = dict(zip(codes, [self._timer_thread.is_alive(), self._timer_time]))
+        codes = ["enabled", "timer", "status"]
+        response = dict(zip(codes, [self._timer_thread.is_alive(), self._timer_time, "timer"]))
         return response
