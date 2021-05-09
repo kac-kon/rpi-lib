@@ -59,8 +59,7 @@ class Api:
             return response
         elif switchID in [4]:
             self.setAutoLED(state)
-            ids = ["AutoLED"]
-            response = jsonify(dict(zip(ids, self.hand.auto_is_alive())))
+            response = jsonify({"AutoLED": self.hand.auto_is_alive()})
             return response
 
     def setBrightness(self, brightness):
