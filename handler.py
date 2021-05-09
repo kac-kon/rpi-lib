@@ -42,8 +42,8 @@ class MainHandler:
         # self._but.register_button_callback(Buttons.button_pressed)
         # self._ir.register_color_callback(self._ir_parser.color_keycode_received)
 
-        self.set_colors([50, 0, 0])
-        self.set_colors([255, 255, 0])
+        self.set_strip_brightness(0)
+        self.set_colors([255, 0, 180])
 
     def start_auto_led(self):
         self._spec.start_auto()
