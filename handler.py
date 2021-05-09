@@ -113,3 +113,9 @@ class MainHandler:
 
     def set_analyzed_frequency(self, new_value):
         self._spec.set_analyzed_frequency(new_value)
+
+    def sleep_amplituner(self, sleep_time):
+        self._ir.sleep(sleep_time)
+
+    def get_sleep_timer(self):
+        return self._ir.get_state()

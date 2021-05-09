@@ -3,6 +3,7 @@ import subprocess
 
 from constants import GPIO
 from drivers.IR_hasher import Hasher
+import threading, time
 import ir_remote_keybinding as irk
 
 
@@ -12,6 +13,9 @@ class IR:
         self._ir_hasher = Hasher(self._pi, GPIO.GPIO_IR_RX, self._cb, timeout=10)
         self._utils_callbacks = []
         self._color_callbacks = []
+        self._timer_event = threading.Event()
+        self._timer_thread = threading.Thread()
+        self._timer_time = -1
 
     def _cb(self, code):
         if code in irk.hashes:
@@ -50,3 +54,25 @@ class IR:
         except Exception as e:
             print(e)
             pass
+
+    def sleep(self, sleep_time):
+        if self._timer_thread.is_alive():
+            self._timer_event.set()
+            self._timer_thread.join()
+            self._timer_time = -1
+        else:
+            self._timer_event.clear()
+            self._timer_thread = threading.Thread(target=self._sleep, args=[sleep_time])
+            self._timer_thread.start()
+
+    def _sleep(self, sleep_time):
+        self._timer_time = sleep_time
+        while self._timer_time > 0:
+            time.sleep(60)
+            self._timer_time -= 1
+        self.send_signal(irk.yamaha['KEY_STANDBY'])
+
+    def get_state(self):
+        codes = ["enabled", "timer"]
+        response = dict(zip(codes, [self._timer_thread.is_alive(), self._timer_time]))
+        return response
