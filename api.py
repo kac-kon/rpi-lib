@@ -88,9 +88,7 @@ class Api:
                  1: irk.yamaha['KEY_SLEEP'],
                  2: irk.yamaha['KEY_VOLUME_DOWN'],
                  3: irk.yamaha['KEY_VOLUME_UP']}
-        if code == 1:
-            pass
-        else:
+        if code != 1:
             self.hand.send_ir_signal(codes[code])
             return jsonify({"status": "OK"})
 

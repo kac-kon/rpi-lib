@@ -67,8 +67,8 @@ class IR:
 
     def _sleep(self, sleep_time):
         self._timer_time = sleep_time
-        while self._timer_time > 0:
-            time.sleep(60)
+        while self._timer_time > 0 and not self._timer_event.is_set():
+            self._timer_event.wait(5)
             self._timer_time -= 1
         self.send_signal(irk.yamaha['KEY_STANDBY'])
 
