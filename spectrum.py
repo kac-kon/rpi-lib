@@ -91,7 +91,8 @@ class Spec:
 
     def stop_auto(self):
         self._auto_exit_event.set()
-        self._auto_thread.join()
+        if self._auto_thread.is_alive():
+            self._auto_thread.join()
 
     def _start_auto(self):
         while not self._auto_exit_event.is_set():
