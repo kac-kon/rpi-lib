@@ -14,8 +14,9 @@ class Api:
         self.app.add_url_rule('/switch/<int:switchID>/<int:state>', 'setSwitches', self.setSwitches, methods=['POST'])
         self.app.add_url_rule('/brightness/<int:brightness>', 'setBrightness', self.setBrightness, methods=['POST'])
         self.app.add_url_rule('/state', 'getCurrentState', self.getCurrentState, methods=['GET'])
-        self.app.add_url_rule('/amplituner/<int:code>/<int:sleep_time>', 'setAmplituner', self.setAmplituner, methods=['POST'])
-        self.app.add_url_rule('/amplituner/sleepState', 'getAmpSleepState', self.getAmpSleepState, methods=['GET'])
+        self.app.add_url_rule('/amplituner/<int:code>', 'setAmplituner', self.setAmplituner, methods=['POST'])
+        self.app.add_url_rule('/amplituner/sleep/<int:sleep_time>', 'sleepAmplituner', self.sleepAmplituner, methods=['POST'])
+        self.app.add_url_rule('/amplituner/sleep/state', 'getAmpSleepState', self.getAmpSleepState, methods=['GET'])
         self.app.add_url_rule('/temperatures', 'getTemperatures', self.getTemperatures, methods=['GET'])
         self.app.add_url_rule('/weather', 'getCurrentWeather', self.getCurrentWeather, methods=['GET'])
         self.app.add_url_rule('/forecast/daily', 'getForecastDaily', self.getForecastDaily, methods=['GET'])
@@ -82,15 +83,20 @@ class Api:
         response = jsonify(brtns, cols, led_en, lcd_en, auto_en)
         return response
 
-    def setAmplituner(self, code, sleep_time):
+    def setAmplituner(self, code):
         codes = {0: irk.yamaha['KEY_STANDBY'],
                  1: irk.yamaha['KEY_SLEEP'],
                  2: irk.yamaha['KEY_VOLUME_DOWN'],
                  3: irk.yamaha['KEY_VOLUME_UP']}
         if code == 1:
-            self.hand.sleep_amplituner(sleep_time)
+            pass
         else:
             self.hand.send_ir_signal(codes[code])
+            return jsonify({"status": "OK"})
+
+    def sleepAmplituner(self, sleep_time):
+        self.hand.sleep_amplituner(sleep_time)
+        return self.hand.get_sleep_timer()
 
     def getAmpSleepState(self):
         return jsonify(self.hand.get_sleep_timer())
