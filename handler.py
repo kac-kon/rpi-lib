@@ -114,6 +114,9 @@ class MainHandler:
     def set_analyzed_frequency(self, new_value):
         self._spec.set_analyzed_frequency(new_value)
 
+    def set_fade_speed(self, new_value):
+        self._spec.set_speed(new_value)
+
     def sleep_amplituner(self, sleep_time):
         self._ir.sleep(sleep_time)
 

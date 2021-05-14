@@ -21,7 +21,7 @@ class Api:
         self.app.add_url_rule('/weather', 'getCurrentWeather', self.getCurrentWeather, methods=['GET'])
         self.app.add_url_rule('/forecast/daily', 'getForecastDaily', self.getForecastDaily, methods=['GET'])
         self.app.add_url_rule('/forecast/hourly', 'getForecastHourly', self.getForecastHourly, methods=['GET'])
-        self.app.add_url_rule('/spec/<int:sensitivity>/<float:inertia>/<int:freq>', 'setSpecConfig',
+        self.app.add_url_rule('/spec/<int:sensitivity>/<float:inertia>/<int:freq>/<int:speed>', 'setSpecConfig',
                               self.setSpecConfig, methods=['POST'])
 
         self.hand.register_button_callback(self.weatherSwitch)
@@ -123,10 +123,11 @@ class Api:
         else:
             self.hand.stop_auto_led()
 
-    def setSpecConfig(self, sensitivity, inertia, freq):
+    def setSpecConfig(self, sensitivity, inertia, freq, speed):
         self.hand.set_sensitivity(sensitivity)
         self.hand.set_inertia(inertia)
         self.hand.set_analyzed_frequency(freq)
+        self.hand.set_fade_speed(speed)
 
 #######################################
 #   BUTTONS ENDPOINTS
