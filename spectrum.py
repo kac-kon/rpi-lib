@@ -101,12 +101,14 @@ class Spec:
             time.sleep(0.05)
 
             if level > self._sensitivity:
+                print("exeeds")
                 time_1 = time.time()
-                if time_1 - self._time0 > self._inertia:
+                if time_1 - self._time0 > self._inertia or True:
                     self._time0 = time.time()
                     if self._fading_thread.is_alive():
                         self._fading_exit_event.set()
                         self._fading_thread.join()
+                        print("joined")
                     self._fading_thread = threading.Thread(target=self._fade_away())
                     self._fading_exit_event.clear()
                     self._fading_thread.start()
