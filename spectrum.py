@@ -138,3 +138,4 @@ class Spec:
 
     def set_speed(self, new_value):
         self._fade_speed = new_value
+
