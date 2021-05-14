@@ -99,6 +99,7 @@ class Spec:
             self.catch_bit()
             level = self.matrix[self._analyzed_frequency]
             # time.sleep(0.05)
+            print("true")
 
             if level > self._sensitivity:
                 print("exeeds")
