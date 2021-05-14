@@ -107,7 +107,7 @@ class Spec:
                     if self._fading_thread.is_alive():
                         self._fading_exit_event.set()
                         self._fading_thread.join()
-                    self._fading_thread = threading.Thread(target=self._fade_away())
+                    self._fading_thread = threading.Thread(target=self._fade_away)
                     self._fading_exit_event.clear()
                     self._fading_thread.start()
 
