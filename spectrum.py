@@ -112,7 +112,7 @@ class Spec:
                         self._fading_thread.join()
                         print("joined")
                     print("start_thread_fade")
-                    self._fading_thread = threading.Thread(target=self._fade_away())
+                    self._fading_thread = threading.Thread(target=self._fade_away)
                     self._fading_exit_event.clear()
                     self._fading_thread.run()
                     print("end_start_auto")
