@@ -25,7 +25,7 @@ class Spec:
         self._fading_exit_event = threading.Event()
         self._inertia = 0.2
         self._analyzed_frequency = 1
-        self._fade_speed = 15
+        self._fade_speed = 1
         self._sensitivity = 150
         self._time0 = time.time()
         random.seed()
@@ -98,20 +98,23 @@ class Spec:
         while not self._auto_exit_event.is_set():
             self.catch_bit()
             level = self.matrix[self._analyzed_frequency]
-            time.sleep(0.05)
+            # time.sleep(0.05)
 
             if level > self._sensitivity:
                 print("exeeds")
                 time_1 = time.time()
-                if time_1 - self._time0 > self._inertia or True:
+                # if time_1 - self._time0 > self._inertia or True:
+                if True:
                     self._time0 = time.time()
                     if self._fading_thread.is_alive():
                         self._fading_exit_event.set()
                         self._fading_thread.join()
                         print("joined")
+                    print("start_thread_fade")
                     self._fading_thread = threading.Thread(target=self._fade_away())
                     self._fading_exit_event.clear()
                     self._fading_thread.start()
+                    print("end_start_auto")
 
     def _fade_away(self):
         brightness = 255
@@ -125,6 +128,7 @@ class Spec:
             self._led.set_brightness(brightness)
             brightness -= self._fade_speed
         self._led.set_brightness(0)
+        print("end_fade")
 
     def auto_is_alive(self):
         return self._auto_thread.is_alive()
