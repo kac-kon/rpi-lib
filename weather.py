@@ -2,6 +2,8 @@ import datetime
 import threading
 
 import subprocess, tempfile
+import time
+
 from pyowm.owm import OWM
 from pyowm.utils.config import get_default_config
 
@@ -18,6 +20,8 @@ class Weather:
         self._one_call = self._manager.one_call(self._cords[0], self._cords[1])
         self._current_conditions = self._one_call.current
         self._current_temperatures = self._read_temp_raw()
+        self._update_thread = threading.Thread(self._update_weather_loop())
+        self._update_thread.start()
 
     @staticmethod
     def _degrees_to_cardinal(d):
@@ -83,6 +87,11 @@ class Weather:
         t1.join()
         t2.join()
         self._current_conditions = self._one_call.current
+
+    def _update_weather_loop(self):
+        while True:
+            self._update_weather()
+            time.sleep(10*60)
 
     def _update_temperatures(self):
         self._current_temperatures = self._read_temp_raw()
@@ -160,14 +169,14 @@ class Weather:
         return conditions
 
     def get_current_conditions(self):
-        self._update_weather()
+        # self._update_weather()
         return self._get_current_values()
 
     def get_forecast_daily(self):
-        self._update_weather()
+        # self._update_weather()
         forecast = self._get_forecast_daily()
         return forecast
 
     def get_forecast_hourly(self):
-        self._update_weather()
+        # self._update_weather()
         return self._get_forecast_hourly()
