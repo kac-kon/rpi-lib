@@ -20,7 +20,7 @@ class Weather:
         self._one_call = self._manager.one_call(self._cords[0], self._cords[1])
         self._current_conditions = self._one_call.current
         self._current_temperatures = self._read_temp_raw()
-        self._update_thread = threading.Thread(self._update_weather_loop())
+        self._update_thread = threading.Thread(self._update_weather_loop)
         self._update_thread.start()
 
     @staticmethod
