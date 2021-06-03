@@ -1,6 +1,7 @@
 from handler import MainHandler
 from flask import jsonify, request, Flask
 import ir_remote_keybinding as irk
+import constants
 
 
 class Api:
@@ -137,8 +138,10 @@ class Api:
         if state:
             if num == 1:
                 self.hand.start_display_weather()
+                self.hand.set_lcd_background(constants.LCD.ID_1, True)
             elif num == 2:
                 self.hand.stop_display_weather()
+                self.hand.set_lcd_background(constants.LCD.ID_1, False)
 
     def autoLEDSwitch(self, num, state):
         if state and num == 3:
