@@ -56,7 +56,10 @@ class Api:
             response = jsonify(dict(zip(ids, self.hand.get_strip_enable())))
             return response
         elif switchID in [2, 3]:
-            self.hand.set_lcd_background(switchID, state)
+            if switchID == 2:
+                self.hand.set_lcd_background(constants.LCD.ID_0, state)
+            else:
+                self.hand.set_lcd_background(constants.LCD.ID_1, state)
             ids = ["LCD0", "LCD1"]
             response = jsonify(dict(zip(ids, self.hand.get_lcd_background())))
             return response

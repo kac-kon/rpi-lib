@@ -76,10 +76,7 @@ class MainHandler:
         self._led.set_color(colors)
 
     def set_lcd_background(self, id_, state):
-        if id_ == 2:
-            self._dis.set_backlight(constants.LCD.ID_0, state)
-        if id_ == 3:
-            self._dis.set_backlight(constants.LCD.ID_1, state)
+        self._dis.set_backlight(id_, state)
 
     def set_strip_enable(self, strip, state):
         self._led.set_enable_state(strip, state)
