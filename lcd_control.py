@@ -91,14 +91,14 @@ class Displays:
 
     def print_menu(self):
         self._lcd0.lcd_clear()
-        self._lcd0.lcd_load_custom_chars([custom_chars.arrows[1]])
+        self._lcd0.lcd_load_custom_chars([custom_chars.arrows[2]])
         self._lcd0.lcd_write(0x80)
         self._lcd0.lcd_write_char(0)
         menu = self._menu.getChildrenText(self.current_content)
         # if self.current_node >= len(menu) - 1:
         #     self.current_node = 0
-        # elif self.current_node < 0:
-        #     self.current_node = len(menu) - 2
+        if self.current_node < 0:
+            self.current_node = len(menu) - 1
         self._lcd0.lcd_display_string(menu[self.current_node % len(menu)], 1, 1)
         if len(menu) > 1:
-            self._lcd0.lcd_display_string(menu[self.current_node+1 % len(menu)], 2, 1)
+            self._lcd0.lcd_display_string(menu[(self.current_node+1) % len(menu)], 2, 1)
