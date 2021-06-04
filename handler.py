@@ -142,8 +142,8 @@ class MainHandler:
             elif button is 3:
                 if self._last_button is button and (time.time() - self._button_time) > 1 and self._dis.current_content is not "root":
                     self._dis.current_content = self._menu.getParent(self._dis.current_content)
-                elif self._menu.getChildren(self._dis.current_content)[self._dis.current_node].final is False:
-                    self._dis.current_content = self._menu.getChildren(self._dis.current_content)[self._dis.current_node].identifier
+                elif self._menu.getChildren(self._dis.current_content)[self._dis.current_node % len(self._menu.getChildrenText(self._dis.current_content))].final is False:
+                    self._dis.current_content = self._menu.getChildren(self._dis.current_content)[self._dis.current_node % len(self._menu.getChildrenText(self._dis.current_content))].identifier
                     self._dis.current_node = 0
             self._dis.print_menu()
 
