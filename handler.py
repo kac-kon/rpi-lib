@@ -129,5 +129,5 @@ class MainHandler:
             elif button is 2:
                 self._dis.current_node += 1
             elif button is 3:
-                self._dis.current_parent = self._menu.getChildren(self._dis.current_parent)[self._dis.current_node].identifier
-            self._dis.print_menu(self._dis.current_parent, self._dis.current_node)
+                self._dis.current_content = self._menu.getChildren(self._dis.current_content)[self._dis.current_node].identifier
+            self._dis.print_menu()
