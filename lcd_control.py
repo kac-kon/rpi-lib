@@ -21,9 +21,9 @@ class Displays:
         self._thread_print_datetime_weather = threading.Thread()
         self._exit_print_weather_event = threading.Event()
 
-        self.print_menu("root", 0)
-        self.current_parent = "root"
+        self.current_content = "root"
         self.current_node = 0
+        self.print_menu()
         # self.print_weather()
 
         # self._var.register_lcd_callback(self.set_backlight)
@@ -89,12 +89,15 @@ class Displays:
     def get_lcd_background(self):
         return [self._var.lcd2_backlight, self._var.lcd4_backlight]
 
-    def print_menu(self, identifier: str, node: int = 0):
-        menu = self._menu.getChildrenText(identifier)
-        if node >= len(menu):
-            node = 0
-        elif node < 0:
-            node = len(menu) - 2
-        self._lcd0.lcd_display_string(menu[node], 1)
+    def print_menu(self):
+        self._lcd0.lcd_clear()
+        self._lcd0.lcd_load_custom_chars(custom_chars.arrows[1])
+        self._lcd0.lcd_write_char(0)
+        menu = self._menu.getChildrenText(self.current_content)
+        if self.current_node >= len(menu) - 1:
+            self.current_node = 0
+        elif self.current_node < 0:
+            self.current_node = len(menu) - 2
+        self._lcd0.lcd_display_string(menu[self.current_node], 1, 2)
         if len(menu) > 1:
-            self._lcd0.lcd_display_string(menu[node+1], 2)
+            self._lcd0.lcd_display_string(menu[self.current_node+1], 2, 2)
