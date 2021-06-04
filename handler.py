@@ -127,7 +127,7 @@ class MainHandler:
         return self._ir.get_state()
 
     def print_menu(self, button, state):
-        if state:
+        if state and self._dis.current_content is not "root":
             self._button_time = time.time()
             self._last_button = button
             self._button_timer_event.clear()
@@ -142,7 +142,7 @@ class MainHandler:
             elif button is 3:
                 if self._last_button is button and (time.time() - self._button_time) > 1 and self._dis.current_content is not "root":
                     self._dis.current_content = self._menu.getParent(self._dis.current_content)
-                else:
+                elif self._menu.getChildren(self._dis.current_content)[self._dis.current_node].final is False:
                     self._dis.current_content = self._menu.getChildren(self._dis.current_content)[self._dis.current_node].identifier
                     self._dis.current_node = 0
             self._dis.print_menu()

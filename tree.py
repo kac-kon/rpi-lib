@@ -12,8 +12,8 @@ class Tree:
                 break
         return index
 
-    def create_node(self, name, identifier=None, parent=None, text="", callback=None):
-        node = Node(name, identifier, parent, text=text, callback=callback)
+    def create_node(self, name, identifier=None, parent=None, text="", callback=None, final=False):
+        node = Node(name, identifier, parent, text=text, callback=callback, final=final)
         self.nodes.append(node)
         self._update_parents_children(parent, identifier)
 
