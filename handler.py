@@ -46,6 +46,7 @@ class MainHandler:
 
         self._button_time = 0.0
         self._last_button = 0
+        self._button_timer_event = threading.Event()
 
         self.set_strip_brightness(0)
         self.set_colors([255, 0, 180])
@@ -129,8 +130,11 @@ class MainHandler:
         if state:
             self._button_time = time.time()
             self._last_button = button
+            self._button_timer_event.clear()
+            threading.Thread(target=self._check_button_timer).start()
 
         if not state:
+            self._button_timer_event.set()
             if button is 1:
                 self._dis.current_node -= 1
             elif button is 2:
@@ -140,4 +144,11 @@ class MainHandler:
                     self._dis.current_content = self._menu.getParent(self._dis.current_content)
                 else:
                     self._dis.current_content = self._menu.getChildren(self._dis.current_content)[self._dis.current_node].identifier
+                    self._dis.current_node = 0
             self._dis.print_menu()
+
+    def _check_button_timer(self):
+        while not self._button_timer_event.isSet():
+            if (time.time() - self._button_time) > 1:
+                self._dis.print_menu_back()
+                self._button_timer_event.set()
