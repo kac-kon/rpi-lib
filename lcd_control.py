@@ -5,12 +5,14 @@ import drivers.lcd_driver
 import threading
 from variables import LcdVar
 from weather import Weather
+from menu import Menu
 
 
 class Displays:
-    def __init__(self, weather: Weather):
+    def __init__(self, weather: Weather, menu: Menu):
         self._var = LcdVar()
         self._weather = weather
+        self._menu = menu
         self._lcd0 = drivers.lcd_driver.lcd(constants.LCD.ID_0, backlight=self._var.lcd2_backlight)
         self._lcd1 = drivers.lcd_driver.lcd(constants.LCD.ID_1, backlight=self._var.lcd4_backlight)
 
@@ -18,6 +20,10 @@ class Displays:
         self._thread_print_datetime = threading.Thread()
         self._thread_print_datetime_weather = threading.Thread()
         self._exit_print_weather_event = threading.Event()
+
+        self.print_menu("root", 0)
+        self.current_parent = "root"
+        self.current_node = 0
         # self.print_weather()
 
         # self._var.register_lcd_callback(self.set_backlight)
@@ -68,7 +74,7 @@ class Displays:
             dt = self._weather.get_datetime_short()
             self._lcd1.lcd_display_string(dt, 1)
             time.sleep(.1)
-            if (time.time() - t) > 60*10:
+            if (time.time() - t) > 60 * 10:
                 t = time.time()
                 self._lcd1.lcd_clear()
                 self._display_weather()
@@ -82,3 +88,13 @@ class Displays:
 
     def get_lcd_background(self):
         return [self._var.lcd2_backlight, self._var.lcd4_backlight]
+
+    def print_menu(self, identifier: str, node: int = 0):
+        menu = self._menu.getChildrenText(identifier)
+        if node >= len(menu):
+            node = 0
+        elif node < 0:
+            node = len(menu) - 2
+        self._lcd0.lcd_display_string(menu[node], 1)
+        if len(menu) > 1:
+            self._lcd0.lcd_display_string(menu[node+1], 2)

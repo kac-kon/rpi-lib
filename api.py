@@ -25,8 +25,9 @@ class Api:
         self.app.add_url_rule('/spec/<int:sensitivity>/<float:inertia>/<int:freq>/<int:speed>', 'setSpecConfig',
                               self.setSpecConfig, methods=['POST'])
 
-        self.hand.register_button_callback(self.weatherSwitch)
-        self.hand.register_button_callback(self.autoLEDSwitch)
+        # self.hand.register_button_callback(self.weatherSwitch)
+        # self.hand.register_button_callback(self.autoLEDSwitch)
+        self.hand.register_button_callback(self.printMenu)
 
 #######################################
 #   REST API ENDPOINTS
@@ -154,3 +155,6 @@ class Api:
                 self.hand.stop_auto_led()
             elif not self.hand.auto_is_alive():
                 self.hand.start_auto_led()
+
+    def printMenu(self, num, state):
+        self.hand.print_menu(num, state)

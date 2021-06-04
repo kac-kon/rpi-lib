@@ -9,6 +9,7 @@ from infrared import IR, irk
 from lcd_control import Displays
 from weather import Weather
 from spectrum import Spec
+from menu import Menu
 from flask import Flask, jsonify, request
 from flask_restful import Api, Resource
 
@@ -33,7 +34,8 @@ class MainHandler:
         self._led = LED()
         self._ir = IR()
         self._weather = Weather()
-        self._dis = Displays(self._weather)
+        self._menu = Menu()
+        self._dis = Displays(self._weather, self._menu)
         self._spec = Spec(self._led)
 
         self._but.start_loop()
@@ -119,3 +121,13 @@ class MainHandler:
 
     def get_sleep_timer(self):
         return self._ir.get_state()
+
+    def print_menu(self, button, state):
+        if state:
+            if button is 1:
+                self._dis.current_node -= 1
+            elif button is 2:
+                self._dis.current_node += 1
+            elif button is 3:
+                self._dis.current_parent = self._menu.getChildren(self._dis.current_parent)[self._dis.current_node].identifier
+            self._dis.print_menu(self._dis.current_parent, self._dis.current_node)
