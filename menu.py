@@ -16,6 +16,12 @@ class Menu:
     def getParent(self, identifier):
         return self._menu.tree[identifier].parent
 
+    def callCallback(self, identifier):
+        self._menu.tree[identifier].call_callback()
+
+    def registerCallback(self, identifier, callback):
+        self._menu.tree[identifier].register_callback(callback)
+
 
 if __name__ == "__main__":
     men = Menu()

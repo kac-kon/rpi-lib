@@ -145,6 +145,8 @@ class MainHandler:
                 elif self._menu.getChildren(self._dis.current_content)[self._dis.current_node % len(self._menu.getChildrenText(self._dis.current_content))].final is False:
                     self._dis.current_content = self._menu.getChildren(self._dis.current_content)[self._dis.current_node % len(self._menu.getChildrenText(self._dis.current_content))].identifier
                     self._dis.current_node = 0
+                elif self._menu.getChildren(self._dis.current_content)[self._dis.current_node % len(self._menu.getChildrenText(self._dis.current_content))].final is True:
+                    self._menu.callCallback(self._menu.getChildren(self._dis.current_content)[self._dis.current_node % len(self._menu.getChildrenText(self._dis.current_content))].identifier)
             self._dis.print_menu()
 
     def _check_button_timer(self):
@@ -152,3 +154,9 @@ class MainHandler:
             if (time.time() - self._button_time) > 1:
                 self._dis.print_menu_back()
                 self._button_timer_event.set()
+
+    def register_menu_callback(self, identifier, callback):
+        self._menu.registerCallback(identifier, callback)
+
+    def weather_print_is_alive(self):
+        return self._dis.weather_print_is_alive()

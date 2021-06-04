@@ -28,6 +28,7 @@ class Api:
         # self.hand.register_button_callback(self.weatherSwitch)
         # self.hand.register_button_callback(self.autoLEDSwitch)
         self.hand.register_button_callback(self.printMenu)
+        self.hand.register_menu_callback("weather_enable", self.enableWeather)
 
 #######################################
 #   REST API ENDPOINTS
@@ -158,3 +159,17 @@ class Api:
 
     def printMenu(self, num, state):
         self.hand.print_menu(num, state)
+
+#######################################
+#   BUTTONS ENDPOINTS
+#######################################
+
+    def enableWeather(self):
+        if self.hand.weather_print_is_alive():
+            self.hand.stop_display_weather()
+            self.hand.set_lcd_background(constants.LCD.ID_0, False)
+            self.hand.set_lcd_background(constants.LCD.ID_1, False)
+        else:
+            self.hand.start_display_weather()
+            self.hand.set_lcd_background(constants.LCD.ID_0, True)
+            self.hand.set_lcd_background(constants.LCD.ID_1, True)

@@ -86,6 +86,9 @@ class Displays:
         self._lcd1.lcd_clear()
         # print('thread finished')
 
+    def weather_print_is_alive(self):
+        return self._thread_print_datetime.is_alive()
+
     def get_lcd_background(self):
         return [self._var.lcd2_backlight, self._var.lcd4_backlight]
 

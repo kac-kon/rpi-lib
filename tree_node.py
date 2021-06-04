@@ -39,3 +39,7 @@ class Node:
 
     def register_callback(self, callback):
         self._callbacks.append(callback)
+
+    def call_callback(self):
+        for cb in self._callbacks:
+            cb()
