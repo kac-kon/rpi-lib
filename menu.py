@@ -13,8 +13,11 @@ class Menu:
         nodes = self.getChildren(identifier)
         return [child.text for child in nodes]
 
+    def getParent(self, identifier):
+        return self._menu.tree[identifier].parent
+
 
 if __name__ == "__main__":
     men = Menu()
-    te = men.getChildrenText("led_root")
+    te = men.getParent("led_root")
     print(te)

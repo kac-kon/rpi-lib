@@ -44,6 +44,9 @@ class MainHandler:
         # self._but.register_button_callback(Buttons.button_pressed)
         # self._ir.register_color_callback(self._ir_parser.color_keycode_received)
 
+        self._button_time = 0.0
+        self._last_button = 0
+
         self.set_strip_brightness(0)
         self.set_colors([255, 0, 180])
 
@@ -124,10 +127,17 @@ class MainHandler:
 
     def print_menu(self, button, state):
         if state:
+            self._button_time = time.time()
+            self._last_button = button
+
+        if not state:
             if button is 1:
                 self._dis.current_node -= 1
             elif button is 2:
                 self._dis.current_node += 1
             elif button is 3:
-                self._dis.current_content = self._menu.getChildren(self._dis.current_content)[self._dis.current_node].identifier
+                if self._last_button is button and (time.time() - self._button_time) > 1 and self._dis.current_content is not "root":
+                    self._dis.current_content = self._menu.getParent(self._dis.current_content)
+                else:
+                    self._dis.current_content = self._menu.getChildren(self._dis.current_content)[self._dis.current_node].identifier
             self._dis.print_menu()
