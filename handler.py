@@ -1,8 +1,5 @@
-import time, threading, numpy as np
+import time, threading
 
-import subprocess
-
-import constants
 from button import ButtonsHandler
 from led_control import LED
 from infrared import IR, irk
@@ -10,14 +7,6 @@ from lcd_control import Displays
 from weather import Weather
 from spectrum import Spec
 from menu import Menu
-from flask import Flask, jsonify, request
-from flask_restful import Api, Resource
-
-
-class Buttons:
-    @staticmethod
-    def button_pressed(num, value):
-        print(f"button {num} is pressed? {value}")
 
 
 class IRParser:

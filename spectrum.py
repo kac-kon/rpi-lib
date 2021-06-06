@@ -1,6 +1,6 @@
 import time
 
-from constants import AUDIO
+from drivers.initials.constants import AUDIO
 import threading
 import pyaudio
 import random

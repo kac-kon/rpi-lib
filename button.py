@@ -1,5 +1,5 @@
 from drivers.MCP3008 import MCP3008
-from variables import ButtonsVar
+from drivers.initials.variables import ButtonsVar
 import threading
 import time
 

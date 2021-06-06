@@ -1,4 +1,4 @@
-import constants
+from drivers.initials import constants
 
 
 class ButtonsVar:
