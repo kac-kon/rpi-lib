@@ -1,4 +1,4 @@
-from tree import Tree
+from components.menu.tree import Tree
 
 
 class MenuList:

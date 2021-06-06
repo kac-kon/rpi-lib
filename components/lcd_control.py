@@ -4,7 +4,7 @@ import drivers.lcd_driver
 import threading
 from drivers.initials.variables import LcdVar
 from components.weather import Weather
-from menu import Menu
+from components.menu.menu import Menu
 
 
 class Displays:

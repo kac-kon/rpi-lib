@@ -6,7 +6,7 @@ from components.infrared import IR, irk
 from components.lcd_control import Displays
 from components.weather import Weather
 from components.spectrum import Spec
-from menu import Menu
+from components.menu.menu import Menu
 
 
 class IRParser:
