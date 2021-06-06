@@ -1,0 +1,56 @@
+from components.menu.tree import Tree
+
+
+class MenuList:
+    def __init__(self):
+        self.tree = Tree()
+        self.tree.create_node("Root", "root", text="Menu")
+
+        self.tree.create_node("Weather", "weather_root", parent="root", text="Weather")
+        self.tree.create_node("Weather enable", "weather_enable", parent="weather_root", text="Enable")
+        self.tree.create_node("Change weather format", "weather_format", parent="weather_root", text="Change format")
+        self.tree.create_node("Weather format short", "weather_format_short", parent="weather_format", text="Short")
+        self.tree.create_node("Weather format long", "weather_format_long", parent="weather_format", text="Long")
+
+        self.tree.create_node("Night mode", "night_mode_root", parent="root", text="Night mode")
+        self.tree.create_node("Night mode enable", "night_mode_enable", parent="night_mode_root", text="Enable")
+        self.tree.create_node("Configure night mode", "night_mode_config", parent="night_mode_root", text="Config")
+        self.tree.create_node("Night mode default config 1", "night_mode_1", parent="night_mode_config", text="Mode 1")
+        self.tree.create_node("Night mode default config 2", "night_mode_2", parent="night_mode_config", text="Mode 2")
+        self.tree.create_node("Night mode default config 3", "night_mode_3", parent="night_mode_config", text="Mode 3")
+
+        self.tree.create_node("Amplituner", "amp_root", parent="root", text="Amplituner")
+        self.tree.create_node("Amplituner standby", "amp_standby", parent="amp_root", text="Standby")
+        self.tree.create_node("Amplituner volume up", "amp_vol_up", parent="amp_root", text="Vol Up")
+        self.tree.create_node("Amplituner volume down", "amp_vol_down", parent="amp_root", text="Vol Down")
+        self.tree.create_node("Amplituner sleep mode", "amp_sleep", parent="amp_root", text="Sleep")
+        self.tree.create_node("Amplituner sleep set time", "amp_sleep_time", parent="amp_sleep", text="set time")
+        self.tree.create_node("Amplituner sleep set def time", "amp_sleep_def_conf", parent="amp_sleep", text="set def time")
+
+        self.tree.create_node("Autoled", "autoled_root", parent="root", text="Autoled")
+        self.tree.create_node("Autoled enable", "autoled_enable", parent="autoled_root", text="Enable")
+        self.tree.create_node("Autoled select mode", "autoled_mode", parent="autoled_root", text="Select mode")
+        self.tree.create_node("Autoled default config 1", "autoled_mode_1", parent="autoled_mode", text="Mode 1")
+        self.tree.create_node("Autoled default config 2", "autoled_mode_2", parent="autoled_mode", text="Mode 2")
+        self.tree.create_node("Autoled default config 3", "autoled_mode_3", parent="autoled_mode", text="Mode 3")
+        self.tree.create_node("Autoled set vars manually", "autoled_set_vars", parent="autoled_root", text="Set variables")
+        self.tree.create_node("Autoled select config", "autoled_config", parent="autoled_root", text="Config")
+        self.tree.create_node("Autoled config save current", "autoled_save_current", parent="autoled_config",  text="Save mode")
+        self.tree.create_node("Autoled config edit mode", "autoled_edit_mode", parent="autoled_config",  text="Edit mode")
+        self.tree.create_node("Autoled config edit mode vars", "autoled_edit_vars", parent="autoled_edit_mode",  text="Edit vars")
+        self.tree.create_node("Autoled config edit mode name", "autoled_edit_name", parent="autoled_edit_mode",  text="Edit name")
+        self.tree.create_node("Autoled config delete mode", "autoled_del_mode", parent="autoled_config",  text="Delete mode")
+
+        self.tree.create_node("LED", "led_root", parent="root", text="LED")
+        self.tree.create_node("LED enable", "led_enable", parent="led_root", text="Enable")
+        self.tree.create_node("LED enable 5V strip", "led_enable_5", parent="led_root", text="Enable 5V")
+        self.tree.create_node("LED enable 12V strip", "led_enable_12", parent="led_root", text="Enable 12V")
+        self.tree.create_node("LED select color", "led_color_select", parent="led_root", text="Select color")
+        self.tree.create_node("LED select mode", "led_mode_select", parent="led_root", text="Select mode")
+        self.tree.create_node("LED set color", "led_color_set", parent="led_root", text="Set color")
+        self.tree.create_node("LED config", "led_config", parent="led_root", text="Config")
+        self.tree.create_node("LED config save current", "led_save_current", parent="led_config",  text="Save mode")
+        self.tree.create_node("LED config edit mode", "led_edit_mode", parent="led_config",  text="Edit mode")
+        self.tree.create_node("LED config edit mode vars", "led_edit_vars", parent="led_edit_mode",  text="Edit vars")
+        self.tree.create_node("LED config edit mode name", "led_edit_name", parent="led_edit_mode",  text="Edit name")
+        self.tree.create_node("LED config delete mode", "led_del_mode", parent="led_config",  text="Delete mode")

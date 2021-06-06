@@ -1,12 +1,12 @@
 import time
 
-from constants import AUDIO
+from drivers.initials.constants import AUDIO
 import threading
 import pyaudio
 import random
 from struct import unpack
 import numpy as np
-from led_control import LED
+from components.led_control import LED
 
 
 class Spec:

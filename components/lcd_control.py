@@ -1,11 +1,10 @@
 import time
-import constants
-import custom_chars
+from drivers.initials import constants, custom_chars
 import drivers.lcd_driver
 import threading
-from variables import LcdVar
-from weather import Weather
-from menu import Menu
+from drivers.initials.variables import LcdVar
+from components.weather import Weather
+from components.menu.menu import Menu
 
 
 class Displays:
