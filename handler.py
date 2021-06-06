@@ -129,13 +129,16 @@ class MainHandler:
             elif button is 2:
                 self._dis.current_node += 1
             elif button is 3:
-                if self._last_button is button and (time.time() - self._button_time) > 1 and self._dis.current_content is not "root":
+                node_no = self._dis.current_node % len(self._menu.getChildrenText(self._dis.current_content))
+                if self._last_button is button and \
+                        (time.time() - self._button_time) > 1 and \
+                        self._dis.current_content is not "root":
                     self._dis.current_content = self._menu.getParent(self._dis.current_content)
-                elif self._menu.getChildren(self._dis.current_content)[self._dis.current_node % len(self._menu.getChildrenText(self._dis.current_content))].final is False:
-                    self._dis.current_content = self._menu.getChildren(self._dis.current_content)[self._dis.current_node % len(self._menu.getChildrenText(self._dis.current_content))].identifier
+                elif self._menu.getChildren(self._dis.current_content)[node_no].final is False:
+                    self._dis.current_content = self._menu.getChildren(self._dis.current_content)[node_no].identifier
                     self._dis.current_node = 0
-                elif self._menu.getChildren(self._dis.current_content)[self._dis.current_node % len(self._menu.getChildrenText(self._dis.current_content))].final is True:
-                    self._menu.callCallback(self._menu.getChildren(self._dis.current_content)[self._dis.current_node % len(self._menu.getChildrenText(self._dis.current_content))].identifier)
+                elif self._menu.getChildren(self._dis.current_content)[node_no].final is True:
+                    self._menu.callCallback(self._menu.getChildren(self._dis.current_content)[node_no].identifier)
             self._dis.print_menu()
 
     def _check_button_timer(self):

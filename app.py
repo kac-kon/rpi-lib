@@ -1,10 +1,7 @@
-import sys
-sys.path.insert(0, '../.')
-
 from flask import Flask
-from application.handler import MainHandler
+from handler import MainHandler
 import logging
-from application.api import Api
+from api import Api
 
 
 if __name__ == "__main__":
