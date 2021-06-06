@@ -3,7 +3,7 @@ from drivers.initials.variables import ButtonsVar
 import threading
 import time
 
-THRESHOLD = 800
+THRESHOLD = 900
 
 
 class ButtonsHandler:
@@ -40,7 +40,7 @@ class ButtonsHandler:
                     elif i == 2:
                         self.var.button_three = False
                     self.pressed[i] = False
-            time.sleep(0.03)
+            time.sleep(0.05)
         self._exit_event.clear()
 
     def exit_loop(self):
