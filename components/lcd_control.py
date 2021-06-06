@@ -3,7 +3,7 @@ from drivers.initials import custom_chars, constants
 import drivers.lcd_driver
 import threading
 from drivers.initials.variables import LcdVar
-from weather import Weather
+from components.weather import Weather
 from menu import Menu
 
 

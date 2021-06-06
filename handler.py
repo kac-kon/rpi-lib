@@ -1,11 +1,11 @@
 import time, threading
 
-from button import ButtonsHandler
-from led_control import LED
-from infrared import IR, irk
-from lcd_control import Displays
-from weather import Weather
-from spectrum import Spec
+from components.button import ButtonsHandler
+from components.led_control import LED
+from components.infrared import IR, irk
+from components.lcd_control import Displays
+from components.weather import Weather
+from components.spectrum import Spec
 from menu import Menu
 
 
