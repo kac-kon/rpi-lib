@@ -1,5 +1,5 @@
 from flask import Flask
-from application.handler import MainHandler
+from .handler import MainHandler
 import logging
 from application.api import Api
 
