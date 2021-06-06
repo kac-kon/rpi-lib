@@ -1,4 +1,4 @@
-from components.menu.menu_list import MenuList
+from menu_list import MenuList
 
 
 class Menu:
@@ -21,3 +21,9 @@ class Menu:
 
     def registerCallback(self, identifier, callback):
         self._menu.tree[identifier].register_callback(callback)
+
+
+if __name__ == "__main__":
+    men = Menu()
+    te = men.getParent("led_root")
+    print(te)

@@ -2,10 +2,11 @@ import uuid
 
 
 class Node:
-    def __init__(self, name: str, identifier: str = None, parent: str = None, text="", callback=None):
+    def __init__(self, name, identifier=None, parent=None, text="", callback=None, final=False):
         self._identifier = (str(uuid.uuid1()) if identifier is None else str(identifier))
         self.name = name
         self.text = text
+        self.final = final
         self._parent = parent
         self._children = []
         self._callbacks = [] if callback is None else [].append(callback)
@@ -26,10 +27,6 @@ class Node:
     @property
     def children(self):
         return self._children
-
-    @property
-    def final(self):
-        return len(self._children) == 0
 
     def child(self, identifier):
         for child in self._children:

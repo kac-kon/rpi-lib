@@ -1,10 +1,10 @@
 import pigpio
 import subprocess
 
-from drivers.initials.constants import GPIO
+from constants import GPIO
 from drivers.IR_hasher import Hasher
-import threading
-from drivers.initials import ir_remote_keybinding as irk
+import threading, time
+import ir_remote_keybinding as irk
 
 
 class IR:

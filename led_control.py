@@ -1,5 +1,5 @@
-from drivers.initials import constants
-from drivers.initials.variables import LedVar
+import constants
+from variables import LedVar
 
 import time
 import pigpio

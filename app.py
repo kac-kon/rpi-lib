@@ -1,7 +1,7 @@
 from flask import Flask
-from .handler import MainHandler
+from handler import MainHandler
 import logging
-from application.api import Api
+from api import Api
 
 
 if __name__ == "__main__":

@@ -7,6 +7,8 @@ import time
 from pyowm.owm import OWM
 from pyowm.utils.config import get_default_config
 
+import constants
+
 
 class Weather:
     def __init__(self):

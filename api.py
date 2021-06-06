@@ -1,6 +1,7 @@
-from .handler import MainHandler
-from flask import jsonify, Flask
-from drivers.initials import constants, ir_remote_keybinding as irk
+from handler import MainHandler
+from flask import jsonify, request, Flask
+import ir_remote_keybinding as irk
+import constants
 
 
 class Api:

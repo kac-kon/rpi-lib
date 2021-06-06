@@ -1,9 +1,9 @@
 from drivers.MCP3008 import MCP3008
-from drivers.initials.variables import ButtonsVar
+from variables import ButtonsVar
 import threading
 import time
 
-THRESHOLD = 900
+THRESHOLD = 800
 
 
 class ButtonsHandler:
@@ -40,7 +40,7 @@ class ButtonsHandler:
                     elif i == 2:
                         self.var.button_three = False
                     self.pressed[i] = False
-            time.sleep(0.05)
+            time.sleep(0.03)
         self._exit_event.clear()
 
     def exit_loop(self):
