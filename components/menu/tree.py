@@ -1,4 +1,4 @@
-from tree_node import Node
+from components.menu.tree_node import Node
 
 
 class Tree:

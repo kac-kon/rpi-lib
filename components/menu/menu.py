@@ -1,4 +1,4 @@
-from menu_list import MenuList
+from components.menu.menu_list import MenuList
 
 
 class Menu:
