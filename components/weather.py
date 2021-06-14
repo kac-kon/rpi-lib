@@ -78,6 +78,7 @@ class Weather:
         return self._current_temperatures
 
     def _update_weather(self):
+        print("updating")
         t1 = threading.Thread(target=self._update_temperatures())
         t2 = threading.Thread(target=self._update_one_call())
         t1.start()
@@ -88,8 +89,9 @@ class Weather:
 
     def _update_weather_loop(self):
         while True:
+            print("loop_working")
             self._update_weather()
-            time.sleep(10*60)
+            time.sleep(10)
 
     def _update_temperatures(self):
         self._current_temperatures = self._read_temp_raw()
