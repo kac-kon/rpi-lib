@@ -6,6 +6,8 @@ import time
 
 from pyowm.owm import OWM
 from pyowm.utils.config import get_default_config
+from pyowm.commons.exceptions import TimeoutError
+
 
 
 class Weather:
@@ -90,7 +92,11 @@ class Weather:
     def _update_weather_loop(self):
         while True:
             print("loop_working")
-            self._update_weather()
+            try:
+                self._update_weather()
+            except TimeoutError:
+                time.sleep(6)
+                print("exception handled")
             time.sleep(10)
 
     def _update_temperatures(self):
