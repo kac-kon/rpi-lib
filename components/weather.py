@@ -96,8 +96,8 @@ class Weather:
                 time.sleep(6)
                 print("exception handled")
             except Exception:
-                pass
-            time.sleep(10)
+                time.sleep(10)
+            time.sleep(10*60)
 
     def _update_temperatures(self):
         self._current_temperatures = self._read_temp_raw()
