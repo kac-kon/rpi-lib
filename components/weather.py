@@ -15,7 +15,7 @@ class Weather:
         self._cords = [50.06860205597571, 19.906051141042095]
         self._config_dict = get_default_config()
         self._config_dict['language'] = 'en'
-        self._owm = OWM('5107288b7cd05e5e4d3a167c10eb87e4', self._config_dict)
+        self._owm = OWM('93d1557fab6b251a18856a4662747d6e', self._config_dict)
         self._manager = self._owm.weather_manager()
         self._one_call = self._manager.one_call(self._cords[0], self._cords[1])
         self._current_conditions = self._one_call.current
@@ -93,7 +93,7 @@ class Weather:
             try:
                 self._update_weather()
             except TimeoutError:
-                time.sleep(6)
+                time.sleep(60)
                 print("exception handled")
             except Exception:
                 time.sleep(10)
