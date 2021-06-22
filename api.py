@@ -1,6 +1,7 @@
 from handler import MainHandler
 from flask import jsonify, Flask
 from drivers.initials import constants, ir_remote_keybinding as irk
+from components.state import State
 
 
 class Api:
@@ -79,13 +80,18 @@ class Api:
         colors = self.hand.get_colors()
         led_enable = self.hand.get_strip_enable()
         lcd_enable = self.hand.get_lcd_background()
-        brtns = {"brightness": brightness}
-        cols = dict(zip(["Red", "Green", "Blue"], colors))
-        led_en = dict(zip(["led1", "led2"], led_enable))
-        lcd_en = dict(zip(["lcd1", "lcd2"], lcd_enable))
-        auto_en = {"auto_led": self.hand.auto_is_alive()}
+        auto_enable = self.hand.auto_is_alive()
+        state = State(brightness, colors[0], colors[1], colors[2], led_enable[0], led_enable[1],
+                      lcd_enable[0], lcd_enable[1], auto_enable)
+        # brtns = {"brightness": brightness}
+        # cols = dict(zip(["Red", "Green", "Blue"], colors))
+        # led_en = dict(zip(["led1", "led2"], led_enable))
+        # lcd_en = dict(zip(["lcd1", "lcd2"], lcd_enable))
+        # auto_en = {"auto_led": self.hand.auto_is_alive()}
 
-        response = jsonify(brtns, cols, led_en, lcd_en, auto_en)
+        # response = jsonify(brtns, cols, led_en, lcd_en, auto_en)
+
+        response = jsonify(state.__dict__)
         return response
 
     def setAmplituner(self, code):
