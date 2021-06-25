@@ -11,7 +11,6 @@ class Api:
 
         self.app.add_url_rule('/checkStatus', 'getStatus', self.getStatus, methods=['GET'])
         self.app.add_url_rule('/RGB/<int:red>/<int:green>/<int:blue>', 'setRGB', self.setRGB, methods=['POST'])
-        self.app.add_url_rule('/RGB', 'getRGB', self.getRGB, methods=['GET'])
         self.app.add_url_rule('/switch/<int:switchID>/<int:state>', 'setSwitches', self.setSwitches, methods=['POST'])
         self.app.add_url_rule('/brightness/<int:brightness>', 'setBrightness', self.setBrightness, methods=['POST'])
         self.app.add_url_rule('/state', 'getCurrentState', self.getCurrentState, methods=['GET'])
@@ -29,6 +28,7 @@ class Api:
         # self.hand.register_button_callback(self.autoLEDSwitch)
         self.hand.register_button_callback(self.printMenu)
         self.hand.register_menu_callback("weather_enable", self.enableWeather)
+        self.hand.register_menu_callback("autoled_enable", self.enableAutoLED)
 
 #######################################
 #   REST API ENDPOINTS
@@ -40,12 +40,6 @@ class Api:
 
     def setRGB(self, red, green, blue):
         self.hand.set_colors([red, green, blue])
-        colors = self.hand.get_colors()
-        codes = ['red', 'green', 'blue']
-        response = dict(zip(codes, colors))
-        return response
-
-    def getRGB(self):
         colors = self.hand.get_colors()
         codes = ['red', 'green', 'blue']
         response = dict(zip(codes, colors))
@@ -178,3 +172,10 @@ class Api:
             self.hand.start_display_weather()
             # self.hand.set_lcd_background(constants.LCD.ID_0, True)
             self.hand.set_lcd_background(constants.LCD.ID_1, True)
+
+    def enableAutoLED(self):
+        if self.hand.auto_is_alive():
+            self.hand.stop_auto_led()
+        else:
+            self.hand.start_auto_led()
+
