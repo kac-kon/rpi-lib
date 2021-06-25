@@ -29,6 +29,8 @@ class Api:
         self.hand.register_button_callback(self.printMenu)
         self.hand.register_menu_callback("weather_enable", self.enableWeather)
         self.hand.register_menu_callback("autoled_enable", self.enableAutoLED)
+        self.hand.register_menu_callback("amp_vol_up", self.volUp)
+        self.hand.register_menu_callback("amp_vol_down", self.volDown)
 
 #######################################
 #   REST API ENDPOINTS
@@ -179,3 +181,10 @@ class Api:
         else:
             self.hand.start_auto_led()
 
+    def volUp(self):
+        code = irk.yamaha['KEY_VOLUME_UP']
+        self.hand.send_ir_signal(code)
+
+    def volDown(self):
+        code = irk.yamaha['KEY_VOLUME_DOWN']
+        self.hand.send_ir_signal(code)
