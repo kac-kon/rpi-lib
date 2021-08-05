@@ -75,7 +75,7 @@ class LED:
                 start = constants.LEDSTRIP.LED_COUNT
                 end = 0
             for i in range(start, end):
-                if i < self._var.led_strip_display or i % self._var.led_strip_direction == 0:
+                if i < self._var.led_strip_display and i % self._var.led_strip_direction == 0:
                     self._strip.setPixelColorRGB(i, red, green, blue)
                 else:
                     self._strip.setPixelColorRGB(i, 0, 0, 0)
