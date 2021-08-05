@@ -193,21 +193,21 @@ class LedVar:
 
     def _notify_led_enable_observer(self, strip, new_value):
         for callback in self._led_enable_callbacks:
-            callback(strip, new_value)
+            callback()
 
     def register_led_enable_callback(self, callback):
         self._led_enable_callbacks.append(callback)
 
     def _notify_led_color_observer(self, channel, new_value):
         for callback in self._led_color_callbacks:
-            callback(channel, new_value)
+            callback()
 
     def register_led_color_callback(self, callback):
         self._led_color_callbacks.append(callback)
 
     def _notify_led_strip_properties_observer(self, prop, new_value):
         for callback in self._led_strip_callbacks:
-            callback(prop, new_value)
+            callback()
 
     def register_led_strip_callback(self, callback):
         self._led_strip_callbacks.append(callback)
