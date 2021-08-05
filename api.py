@@ -11,7 +11,7 @@ class Api:
 
         self.app.add_url_rule('/checkStatus', 'getStatus', self.get_status, methods=['GET'])
         self.app.add_url_rule('/RGB/<int:red>/<int:green>/<int:blue>', 'setRGB', self.set_rgb, methods=['POST'])
-        self.app.add_url_rule('/switch/<int:switchID>/<int:state>', 'setSwitches', self.set_switches, methods=['POST'])
+        self.app.add_url_rule('/switch/<int:switch_id>/<int:state>', 'setSwitches', self.set_switches, methods=['POST'])
         self.app.add_url_rule('/brightness/<int:brightness>', 'setBrightness', self.set_brightness, methods=['POST'])
         self.app.add_url_rule('/led/strip/direction/<int:new_value>', 'setStripDirection',
                               self.set_strip_direction, methods=['POST'])
@@ -151,23 +151,23 @@ class Api:
 #   BUTTONS ENDPOINTS
 #######################################
 
-    def weather_switch(self, num, state):
-        if state:
-            if num == 1:
-                self.hand.start_display_weather()
-                self.hand.set_lcd_background(constants.LCD.ID_0, True)
-                self.hand.set_lcd_background(constants.LCD.ID_1, True)
-            elif num == 2:
-                self.hand.stop_display_weather()
-                self.hand.set_lcd_background(constants.LCD.ID_0, False)
-                self.hand.set_lcd_background(constants.LCD.ID_1, False)
-
-    def auto_led_switch(self, num, state):
-        if state and num == 3:
-            if self.hand.auto_is_alive():
-                self.hand.stop_auto_led()
-            elif not self.hand.auto_is_alive():
-                self.hand.start_auto_led()
+    # def weather_switch(self, num, state):
+    #     if state:
+    #         if num == 1:
+    #             self.hand.start_display_weather()
+    #             self.hand.set_lcd_background(constants.LCD.ID_0, True)
+    #             self.hand.set_lcd_background(constants.LCD.ID_1, True)
+    #         elif num == 2:
+    #             self.hand.stop_display_weather()
+    #             self.hand.set_lcd_background(constants.LCD.ID_0, False)
+    #             self.hand.set_lcd_background(constants.LCD.ID_1, False)
+    #
+    # def auto_led_switch(self, num, state):
+    #     if state and num == 3:
+    #         if self.hand.auto_is_alive():
+    #             self.hand.stop_auto_led()
+    #         elif not self.hand.auto_is_alive():
+    #             self.hand.start_auto_led()
 
     def print_menu(self, num, state):
         self.hand.print_menu(num, state)
