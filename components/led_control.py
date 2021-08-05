@@ -65,13 +65,18 @@ class LED:
 
     def _v5_set_color(self):
         if self._var.led5_on:
-            for i in range(0, constants.LEDSTRIP.LED_COUNT, self._var.led_strip_direction):
-                if i < self._var.led_strip_display:
-                    self._strip.setPixelColorRGB(
-                        i,
-                        int(self._var.led_red * self._var.led_brightness / constants.INITIALS.LED_BRIGHTNESS),
-                        int(self._var.led_green * self._var.led_brightness / constants.INITIALS.LED_BRIGHTNESS),
-                        int(self._var.led_blue * self._var.led_brightness / constants.INITIALS.LED_BRIGHTNESS))
+            red = int(self._var.led_red * self._var.led_brightness / constants.INITIALS.LED_BRIGHTNESS)
+            green = int(self._var.led_green * self._var.led_brightness / constants.INITIALS.LED_BRIGHTNESS)
+            blue = int(self._var.led_blue * self._var.led_brightness / constants.INITIALS.LED_BRIGHTNESS)
+            if self._var.led_strip_direction > 0:
+                start = 0
+                end = constants.LEDSTRIP.LED_COUNT
+            else:
+                start = constants.LEDSTRIP.LED_COUNT
+                end = 0
+            for i in range(start, end):
+                if i < self._var.led_strip_display or i % self._var.led_strip_direction == 0:
+                    self._strip.setPixelColorRGB(i, red, green, blue)
                 else:
                     self._strip.setPixelColorRGB(i, 0, 0, 0)
             self._strip.show()
