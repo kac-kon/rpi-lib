@@ -45,7 +45,7 @@ class Spec:
             dev = self.p.get_device_info_by_index(i)
             if dev['maxInputChannels'] > 0:
                 print(f"{i}. {dev['name']}")
-            i +=1
+            i += 1
 
     @staticmethod
     def _piff(val):
@@ -59,7 +59,8 @@ class Spec:
         fourier = np.delete(fourier, len(fourier) - 1)
         power = np.abs(fourier)
         for i in range(10):
-            matrix[i] = (int(np.max(power[self._piff(self.frequencies[i]): self._piff(self.frequencies[i+1]): 1])) / 10) ** self.sensitivity[i+1]
+            matrix[i] = (int(np.max(power[self._piff(self.frequencies[i]): self._piff(self.frequencies[i+1]): 1]))
+                         / 10) ** self.sensitivity[i+1]
         matrix = np.divide(np.multiply(matrix, self.weighting), 10_000_000 / (self.sensitivity[0] * 40)).astype(int)
         self.matrix = matrix.clip(0, 255)
 

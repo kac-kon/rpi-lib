@@ -26,6 +26,7 @@ class LED:
 
         self._var.register_led_color_callback(self._catch_color_change)
         self._var.register_led_enable_callback(self._catch_enable_change)
+        self._var.register_led_strip_callback(self._catch_strip_properties_change)
 
     @staticmethod
     def random_colors():
@@ -36,11 +37,14 @@ class LED:
             return [255, 255, 255]
         return [c1, c2, c3]
 
-    def _catch_enable_change(self, strip, state):
+    def _catch_enable_change(self):
         self._set_color()
 
-    def _catch_color_change(self, channel, val):
+    def _catch_color_change(self):
         self._set_color()
+
+    def _catch_strip_properties_change(self):
+        self._v5_set_color()
 
     def _set_color(self):
         self._v12_set_color()
@@ -61,13 +65,15 @@ class LED:
 
     def _v5_set_color(self):
         if self._var.led5_on:
-            for i in range(0, self._var.led_strip_display, self._var.led_strip_direction):
-                self._strip.setPixelColorRGB(i, int(
-                    self._var.led_red * self._var.led_brightness / constants.INITIALS.LED_BRIGHTNESS),
-                                             int(
-                                                 self._var.led_green * self._var.led_brightness / constants.INITIALS.LED_BRIGHTNESS),
-                                             int(
-                                                 self._var.led_blue * self._var.led_brightness / constants.INITIALS.LED_BRIGHTNESS))
+            for i in range(0, constants.LEDSTRIP.LED_COUNT, self._var.led_strip_direction):
+                if i < self._var.led_strip_display:
+                    self._strip.setPixelColorRGB(
+                        i,
+                        int(self._var.led_red * self._var.led_brightness / constants.INITIALS.LED_BRIGHTNESS),
+                        int(self._var.led_green * self._var.led_brightness / constants.INITIALS.LED_BRIGHTNESS),
+                        int(self._var.led_blue * self._var.led_brightness / constants.INITIALS.LED_BRIGHTNESS))
+                else:
+                    self._strip.setPixelColorRGB(i, 0, 0, 0)
             self._strip.show()
         else:
             for i in range(0, self._var.led_strip_display, self._var.led_strip_direction):
@@ -120,3 +126,9 @@ class LED:
 
     def set_brightness(self, new_value):
         self._var.led_brightness = new_value
+
+    def set_strip_direction(self, new_value):
+        self._var.led_strip_direction = new_value
+
+    def set_strip_display_count(self, new_value):
+        self._var.led_strip_display = new_value

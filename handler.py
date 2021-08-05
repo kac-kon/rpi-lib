@@ -1,12 +1,13 @@
-import time, threading
+import threading
+import time
 
 from components.button import ButtonsHandler
-from components.led_control import LED
 from components.infrared import IR, irk
 from components.lcd_control import Displays
-from components.weather import Weather
-from components.spectrum import Spec
+from components.led_control import LED
 from components.menu.menu import Menu
+from components.spectrum import Spec
+from components.weather import Weather
 
 
 class IRParser:
@@ -79,6 +80,12 @@ class MainHandler:
     def set_strip_brightness(self, new_value):
         self._led.set_brightness(new_value)
 
+    def set_strip_direction(self, new_value):
+        self._led.set_strip_direction(new_value)
+
+    def set_strip_display_count(self, new_value):
+        self._led.set_strip_display_count(new_value)
+
     def send_ir_signal(self, key_code):
         self._ir.send_signal(key_code)
 
@@ -142,7 +149,7 @@ class MainHandler:
             self._dis.print_menu()
 
     def _check_button_timer(self):
-        while not self._button_timer_event.isSet():
+        while not self._button_timer_event.is_set():
             if (time.time() - self._button_time) > 1:
                 self._dis.print_menu_back()
                 self._button_timer_event.set()

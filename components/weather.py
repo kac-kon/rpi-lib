@@ -1,13 +1,12 @@
 import datetime
+import subprocess
+import tempfile
 import threading
-
-import subprocess, tempfile
 import time
 
+from pyowm.commons.exceptions import TimeoutError
 from pyowm.owm import OWM
 from pyowm.utils.config import get_default_config
-from pyowm.commons.exceptions import TimeoutError
-
 
 
 class Weather:

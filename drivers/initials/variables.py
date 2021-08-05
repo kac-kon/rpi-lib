@@ -169,7 +169,13 @@ class LedVar:
 
     @led_strip_direction.setter
     def led_strip_direction(self, new_value):
-        prop = constants.INITIALS.LED_STRIP_DIRECTION
+        prop = constants.INITIALS.LED_STRIP_PROP_DIR
+        if new_value < -3:
+            new_value = -3
+        elif new_value > 3:
+            new_value = 3
+        elif new_value == 0:
+            new_value = 1
         self._led_strip_direction = new_value
         self._notify_led_strip_properties_observer(prop, new_value)
 
@@ -179,7 +185,9 @@ class LedVar:
 
     @led_strip_display.setter
     def led_strip_display(self, new_value):
-        prop = constants.INITIALS.LED_STRIP_DISPLAY
+        prop = constants.INITIALS.LED_STRIP_PROP_DIS
+        if new_value > constants.LEDSTRIP.LED_COUNT:
+            new_value = constants.LEDSTRIP.LED_COUNT
         self._led_strip_display = new_value
         self._notify_led_strip_properties_observer(prop, new_value)
 
@@ -198,7 +206,6 @@ class LedVar:
         self._led_color_callbacks.append(callback)
 
     def _notify_led_strip_properties_observer(self, prop, new_value):
-        # [callback(prop, new_value) for callback in self._led_strip_callbacks]
         for callback in self._led_strip_callbacks:
             callback(prop, new_value)
 
