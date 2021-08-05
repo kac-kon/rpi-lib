@@ -78,8 +78,8 @@ class LED:
                 step = -1
             for i in range(start, end, step):
                 if abs(start - i) < self._var.led_strip_display and i % self._var.led_strip_direction == 0:
-                    print(abs(start - i))
-                    print(self._var.led_strip_display)
+                    print(abs(start - i), end=' ')
+                    print(i)
                     self._strip.setPixelColorRGB(i, red, green, blue)
                 else:
                     self._strip.setPixelColorRGB(i, 0, 0, 0)
