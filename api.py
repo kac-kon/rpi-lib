@@ -136,7 +136,7 @@ class Api:
             self.hand.stop_auto_led()
 
     def set_strip_direction(self, new_value):
-        self.hand.set_strip_direction(new_value)
+        self.hand.set_strip_direction(new_value - 3)
 
     def set_strip_display_count(self, new_value):
         self.hand.set_strip_display_count(new_value)
